@@ -4,5 +4,5 @@ from main.models import Users
 
 
 class VerifySlugs(models.Model):
-    user_name = models.OneToOneField(Users, on_delete=models.CASCADE, primary_key=True, to_field="unique_name")
+    user_id = models.OneToOneField(Users, on_delete=models.CASCADE, primary_key=True, to_field="unique_id", db_column="user_id")
     verifycode = models.CharField(max_length=50)
