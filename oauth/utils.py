@@ -31,7 +31,7 @@ def send_mail(to, code):
     background: lime;
     border: none;
     height: 40px;
-"><a style="color: beige; font-weight: bold" href="https://localhost:8000/{code}"> Click me </a></button>''', "html"))
+"><a style="color: beige; font-weight: bold" href="http://localhost:8000/{code}"> Click me </a></button>''', "html"))
     try:
         smtp.sendmail(to_addrs=to, from_addr='snipperstore@outlook.com', msg=msg.as_bytes())
         return True
