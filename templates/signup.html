@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign UP</title>
+</head>
+<body>
+    <form action="{% url 'oauth:signup' %}" method="post">
+        {% csrf_token %}
+        <div><label for="">Username : <input type="text" name="username"></label></div>
+        <div><label for="">Display Name : <input type="text" name="displayname"></label></div>
+        <div><label for="">Password : <input type="password" name="password"></label></div>
+        <div><label for="">Email : <input type="email" name="email"></label></div>
+        <div><label for="">Submit<input type="submit"></label></div>
+    </form>
+</body>
+</html>

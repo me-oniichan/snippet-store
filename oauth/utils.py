@@ -11,7 +11,7 @@ smtp.starttls()
 
 # Login with your email and password
 
-with open("auth/credentials.json") as file:
+with open("oauth/credentials.json") as file:
     creds = json.load(file)
     smtp.login(creds["mail"], creds["password"])
 

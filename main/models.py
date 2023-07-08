@@ -9,7 +9,7 @@ class Users(models.Model):
 
 
 class UserData(models.Model):
-    unique_id = models.ForeignKey("Users", on_delete=models.CASCADE, to_field="unique_id", unique=True, primary_key=True)
+    unique_id = models.OneToOneField("Users", on_delete=models.CASCADE, to_field="unique_id", primary_key=True)
     display_name = models.CharField(max_length=25)
     password = models.CharField(max_length=64)
     email = models.EmailField(max_length=50)
@@ -18,5 +18,5 @@ class UserData(models.Model):
 
 
 class Snippets:
-    unique_id = models.ForeignKey("Users", on_delete=models.CASCADE, to_field="unique_id")
+    unique_id = models.ForeignKey("Users", on_delete=models.CASCADE, to_field="unique_id") #one to many realtion
     snippet_id = models.CharField(max_length=15)
