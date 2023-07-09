@@ -1,4 +1,4 @@
-import uuid
+import datetime
 
 from django.db import models
 
@@ -17,6 +17,20 @@ class UserData(models.Model):
     salt = models.CharField(max_length=50)
 
 
-class Snippets:
-    unique_id = models.ForeignKey("Users", on_delete=models.CASCADE, to_field="unique_id") #one to many realtion
-    snippet_id = models.CharField(max_length=15)
+class Snippets(models.Model):
+    unique_id = models.ForeignKey("Users", on_delete=models.CASCADE, to_field="unique_id")  # one-to-many relation
+    snippet_id = models.CharField(max_length=15, unique=True, db_index=True)
+
+
+class SnippetData(models.Model):
+    snippet_id = models.ForeignKey("Snippets", on_delete=models.CASCADE, to_field="snippet_id")
+    title = models.CharField(max_length=50, db_index=True)
+    text = models.TextField(default="")
+    language = models.CharField(max_length=10)
+    description = models.TextField(default="")
+    forked_from = models.CharField(max_length=15, null=True)
+
+
+class SnippetInfo(models.Model):
+    snippet_id = models.ForeignKey("Snippets", on_delete=models.CASCADE, to_field="snippet_id")
+    create_date = models.DateField(default=datetime.datetime.now, editable=False, null=False)
