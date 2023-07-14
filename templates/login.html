@@ -1,39 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {% load static %}
     <meta charset="UTF-8">
     <title>Login</title>
+    <link rel="stylesheet" href="{% static  'oauth/css/login.css' %}">
+    <link rel="stylesheet" href="{% static  'oauth/css/compiled-login.css' %}">
 </head>
 <body>
-    <div class="termial-bg">
-        <div class="termial-head">Welcome back to Snippet Store</div>
-        <div class="termial-feild">
-            <div class="title-feild">
-                Enter username or Email
+    <div id='stars'></div>
+    <div id='stars2'></div>
+    <div id='stars3'></div>
+    <div id="bg"></div>
+
+    <div class="container">
+
+        <form class="terminal-bg shadow-wrapper" action="/oauth/login" method="post">
+            {% csrf_token %}
+            <div class="terminal-head">Welcome back to Snippet Store</div>
+            <div class="terminal-field">
+                <div class="title-field">
+                    Enter username
+                </div>
+                <div class="terminal-input-container">
+                    <label for="username" class="terminal-label"><span class="root">root</span>@<span class="user">user</span>$ </label>
+                    <input type="text" class="terminal-input" id="username" name="username">
+                </div>
             </div>
-            <div class="termin-input-container">
-                <label for="username" class="terminal-label">root$user=></label>
-                <input type="text" class="terminal-input">
+            <div class="terminal-field">
+                <div class="title-field">
+                    Enter Password
+                </div>
+                <div class="terminal-input-container">
+                    <label for="password" class="terminal-label"><span class="root">root</span>@<span class="user">user</span>$ </label>
+                    <div style="display: inline;">
+                        <input type="password" class="terminal-input" id="password" name="password">
+                        <img src="{% static  'oauth/eye-open.png' %}" alt="" id="showpass" width="20px">
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="termial-feild">
-            <div class="title-feild">
-                Enter Password
+            <div class="submit-bt">
+                <button class="submit" id="submit" >Login</button>
             </div>
-            <div class="termin-input-container">
-                <label for="username" class="terminal-label">root$user=></label>
-                <input type="text" class="terminal-input">
-            </div>
-        </div>
-        <div class="termial-feild">
-            <div class="termin-input-container">
-                <label for="username" class="terminal-label error">root$user=></label>
-                <span class="error-text">Username and Password didn't match</span>
-            </div>
-        </div>
-        <div class="submit-bt">
-            <button class="submit">Login</button>
-        </div>
+            {% if error_field %}
+                <div class="error_msg">Username or Password doesn't match</div>
+            {% endif %}
+        </form>
+        <div class="signup" href="/signup"><a>Don't have an account? Sign up</a></div>
     </div>
+    <script src="{% static  'oauth/js/login.js' %}"></script>
 </body>
 </html>

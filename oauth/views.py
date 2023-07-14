@@ -40,7 +40,7 @@ def update_mail(request):
     try:
         user = Users.objects.get(unique_name=username)
         salt = UserData.objects.get(unique_id=user).salt
-        password = hashlib.sha256((password+salt).encode('utf-8')).hexdigest()
+        password = hashlib.sha256((password + salt).encode('utf-8')).hexdigest()
 
         if UserData.objects.filter(unique_id=user, password=password).exists():
             email_code = username + uuid.uuid5(uuid.NAMESPACE_URL, request.POST["email"]).hex
@@ -103,7 +103,6 @@ def new_user(request):
             }
             return JsonResponse(response, status=503)
 
-
     else:
         return JsonResponse({
             "message": "username exists",
@@ -113,7 +112,6 @@ def new_user(request):
 
 def verify_email(request, email_code):
     try:
-        print(email_code)
         db_data = VerifySlugs.objects.get(verifycode=email_code)
         user = UserData.objects.get(unique_id=db_data.user_id)
         user.verified = True
@@ -134,3 +132,21 @@ def verify_email(request, email_code):
         print(e)
 
     return HttpResponse("done")
+
+
+def login(request):
+    return render(template_name='login.html', request=request, context={"error_field": False})
+
+
+def verifyLogin(request):
+    user: str = request.POST["username"]
+    password: str = request.POST["password"]
+    try:
+        user = Users.objects.get(unique_name=user.strip())
+        userdata = UserData.objects.get(unique_id=user)
+        password = hashlib.sha256((password+userdata.salt).encode('utf-8')).hexdigest()
+        userdata = UserData.objects.get(unique_id=user, password=password)
+        return HttpResponse(f"Logged in as user id {userdata.unique_id.unique_id}")
+    except (Users.DoesNotExist ,UserData.DoesNotExist):
+        return render(template_name='login.html', request=request, context={"error_field": True})
+

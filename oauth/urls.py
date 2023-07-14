@@ -7,5 +7,6 @@ urlpatterns = [
     path("adduser/", views.new_user, name="signup"),
     path("verify/<str:email_code>", views.verify_email),
     path("verify_username/<str:name>", views.check_username),
-    path("verify_email/<str:email>", views.check_email)
+    path("verify_email/<str:email>", views.check_email),
+    path("login", views.verifyLogin)
 ]
