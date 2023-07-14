@@ -1,8 +1,12 @@
+html{
+    margin: 0;
+    padding: 0;
+    background: steelblue;
+}
 .container{
     display: flex;
     height: 95vh;
     width: 100%;
-    margin: auto;
     flex-direction: column;
 }
 .terminal-bg {
@@ -29,6 +33,12 @@
 
 .shadow-wrapper{
     box-shadow: 0px 0px 3px 0px white, 0px 0px 6px 4px #C33764;
+}
+
+@media screen and (max-width: 550px) {
+    .terminal-bg{
+        width: calc(100vw - 30px);
+    }
 }
 
 .terminal-head{
