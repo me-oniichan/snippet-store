@@ -20,7 +20,7 @@ html{
     justify-content: center;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 15px;
 
     color: white;
     background-color: #12121269;
@@ -32,7 +32,7 @@ html{
 }
 
 .shadow-wrapper{
-    box-shadow: 0px 0px 3px 0px white, 0px 0px 6px 4px #C33764;
+    box-shadow: 0px 0px 2px 1px #ffffffd1, 0px 0px 50px -1px #be325faa;
 }
 
 @media screen and (max-width: 550px) {
@@ -42,7 +42,7 @@ html{
 }
 
 .terminal-head{
-    background-color: #3e8cdf7d;
+    background-color: #bd456be4;
     width: 100%;
     border-radius: 5px 5px 0 0;
     padding: 5px;
@@ -55,7 +55,7 @@ html{
 
 .title-field{
     color: cyan;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 500;
 }
 
@@ -67,7 +67,7 @@ html{
     background: transparent;
     outline: none;
     color: white;
-    font: 18px consolas, sans-serif;
+    font: 16px consolas, sans-serif;
     width: calc(100% - 170px);
     border: 2px solid transparent;
     border-radius: 5px;
@@ -76,7 +76,9 @@ html{
 .terminal-input:focus{
     border: 2px solid#09bcf3;
 }
-
+label{
+    font-size: 18px;
+}
 .root{
     color: #ff3278;
 }
@@ -85,7 +87,7 @@ html{
     color: #1bff78;
 }
 
-#showpass{
+#showpass, #con-showpass{
   filter: invert();
   transition: 1s;
 }
@@ -119,13 +121,26 @@ html{
 }
 
 .signup{
-    color: rgba(245, 245, 220, 0.68);
     margin: auto;
     margin-top: 10px;
     cursor: pointer;
-    transition: 200ms;
 }
 
-.signup:hover{
+.signup a:hover{
     color: beige;
+}
+
+.signup a{
+    text-decoration: none;
+    color: rgba(245, 245, 220, 0.68);
+    transition: 200ms;
+    font-family: sans-serif;
+}
+
+
+.warning{
+    color: #fb5c5c;
+    font-size: 15px;
+    padding-left: 5px;
+    height: 20px;
 }

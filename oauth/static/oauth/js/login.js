@@ -1,5 +1,5 @@
-let elem = document.getElementById("showpass")
-let passelem = document.getElementById("password")
+const elem = document.getElementById("showpass")
+const passelem = document.getElementById("password")
 let showpass = false
 
 elem.addEventListener("click", ()=>{
@@ -16,7 +16,7 @@ elem.addEventListener("click", ()=>{
 })
 
 const rotate = () =>{
-    let bg = document.getElementById("bg")
+    const bg = document.getElementById("bg")
     let deg = 0
     setInterval(()=>{
         deg = (deg+5)%360
