@@ -4,7 +4,6 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ('oauth', '0002_alter_verifyslugs_user_name'),
     ]
