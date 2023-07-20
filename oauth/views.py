@@ -9,8 +9,9 @@ from main.models import Users, UserData
 from .indicators import *
 
 
-
-def auth_home(request):
+def sign_up(request):
+    if request.session.exists(request.session.session_key) and Users.objects.filter(unique_id=request.session["userid"]).exists():
+        return redirect("/")
     return render(template_name="signup.html", request=request)
 
 
@@ -83,19 +84,15 @@ def new_user(request):
     request.session["userid"] = unique_id
     request.session.modified = True
 
-    # TODO: add styling to this response
-    return redirect("/login")
+    return redirect("/")
 
 
 def login(request):
     if request.session.exists(request.session.session_key):
         unique_id = request.session["userid"]
-        try:
-            user = Users.objects.get(unique_id=unique_id)
-            return HttpResponse(
-                f"Logged in as user id {user.unique_id} <br> session id : {request.session.session_key}")
-        except Users.DoesNotExist:
-            pass
+        if Users.objects.filter(unique_id=unique_id).exists():
+            return redirect("/")
+
     return render(template_name='login.html', request=request, context={"error_field": False})
 
 
@@ -109,6 +106,7 @@ def verifyLogin(request):
         userdata = UserData.objects.get(unique_id=user, password=password)
         request.session["userid"] = user.unique_id
         request.session.modified = True
-        return HttpResponse(f"Logged in as user id {userdata.unique_id.unique_id}")
+        return redirect("/")
+
     except (Users.DoesNotExist, UserData.DoesNotExist):
         return render(template_name='login.html', request=request, context={"error_field": True})
