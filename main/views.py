@@ -1,6 +1,6 @@
 import json
 
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
@@ -13,7 +13,7 @@ def home(request):
         unique_id = request.session["userid"]
         try:
             user = Users.objects.get(unique_id=unique_id)
-            return render(request, "dashboard.html", context={"username": user.unique_name})
+            return user_dashboard(request)
         except Users.DoesNotExist:
             pass
     return render(request, "index.html")
@@ -53,4 +53,17 @@ def save_snippet(request):
         snippet.save()
         snippet_data.save()
 
-        return redirect("/")
+        return JsonResponse({"message": "done"})
+
+
+def user_dashboard(request):
+    try:
+        print("processing")
+        user = Users.objects.get(unique_id=request.session["userid"])
+        snippet_ids = Snippets.objects.filter(unique_id=user)
+        snippets = SnippetData.objects.filter(snippet_id__in=snippet_ids)
+        return render(request, "dashboard.html", context={
+            "snippets": snippets
+        })
+    except Users.DoesNotExist:
+        return render(request, "index.html")

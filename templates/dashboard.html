@@ -6,5 +6,25 @@
 </head>
 <body>
  <h1>Welcome {{ username }}</h1>
+    {% if snippets %}
+        <h2>Your snippets are</h2>
+        <ol>
+            {% for snippet in snippets %}
+                <li>
+                    <h3>{{ snippet.title }}</h3>
+                    <h4>Language : {{ snippet.language }}</h4>
+                    <div class="code">
+                        {{ snippet.text }}
+                    </div>
+                    <h4>Description</h4>
+                    <div class="desc">
+                        {{ snippet.description }}
+                    </div>
+                </li>
+            {% endfor %}
+        </ol>
+    {% else %}
+        <h2>You don't have any snippet</h2>
+    {% endif %}
 </body>
 </html>

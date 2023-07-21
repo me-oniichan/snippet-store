@@ -23,7 +23,7 @@ class Snippets(models.Model):
 
 
 class SnippetData(models.Model):
-    snippet_id = models.ForeignKey("Snippets", on_delete=models.CASCADE, to_field="snippet_id")
+    snippet_id = models.ForeignKey("Snippets", on_delete=models.CASCADE, to_field="snippet_id", primary_key=True)
     title = models.CharField(max_length=50, db_index=True)
     text = models.TextField(default="")
     language = models.CharField(max_length=10)
