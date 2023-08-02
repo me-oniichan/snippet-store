@@ -63,7 +63,8 @@ def user_dashboard(request):
         snippet_ids = Snippets.objects.filter(unique_id=user)
         snippets = SnippetData.objects.filter(snippet_id__in=snippet_ids)
         return render(request, "dashboard.html", context={
-            "snippets": snippets
+            "snippets": snippets,
+            "username" : user.unique_name
         })
     except Users.DoesNotExist:
         return render(request, "index.html")
