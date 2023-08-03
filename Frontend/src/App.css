@@ -1,0 +1,25 @@
+.header{
+    background-color: var(--bg-tertiary);
+    display: flex;
+    justify-content: space-between;
+    height: 60px;
+}
+
+.store-logo{
+    font-weight: bold;
+    font-size: 30px;
+    margin: auto 0 auto 15px;
+}
+
+.header-list{
+    display: flex;
+    gap: 20px;
+    margin: auto 15px auto 0;
+    font: 20px sans-serif;
+    font-weight: 500;
+}
+
+.header-option:hover{
+    color: var(--glow);
+    text-shadow: 0 0 12px var(--glow);
+}
