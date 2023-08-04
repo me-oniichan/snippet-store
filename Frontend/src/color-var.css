@@ -1,10 +1,11 @@
 :root{
     --bg-secondary : #181825;
     --bg-primary : #11111b;
-    --bg-tertiary : #1e1e2e;
+    --bg-tertiary : #2a2a35;
     --fg-primary : #27fb6b;
     --fg-secondary : #14cc60;
     --glow : #50ffb1;
     --text-color : #cacacae5;
     --heading-color : #14cc60;
+    --border-color : beige;
 }
