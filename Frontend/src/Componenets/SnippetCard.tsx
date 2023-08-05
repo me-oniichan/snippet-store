@@ -1,3 +1,5 @@
+import { AiOutlineEdit, AiOutlineDelete} from "react-icons/ai"
+
 interface snippetData{
     children : string;
 }
@@ -13,8 +15,8 @@ export default function SnippetCard(props : snippetData){
             </div> 
 
             <div className="snippet-footer">
-                <span>edit</span>
-                <span>delete</span>
+                <AiOutlineEdit className="footer-icon" size={25}/>
+                <AiOutlineDelete className="footer-icon" size={25}/>
             </div>
         </div>
     )

@@ -86,4 +86,15 @@
     margin-top: auto;
     background-color: var(--bg-tertiary);
     border-radius: 0 0 15px 15px;
+    display: flex;
+    justify-content: end;
+}
+
+
+.footer-icon{
+    margin: 5px;
+}
+
+.footer-icon:hover{
+    color: white;
 }
