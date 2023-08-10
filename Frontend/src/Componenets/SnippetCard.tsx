@@ -15,8 +15,8 @@ export default function SnippetCard(props : snippetData){
             </div> 
 
             <div className="snippet-footer">
-                <AiOutlineEdit className="footer-icon" size={25}/>
-                <AiOutlineDelete className="footer-icon" size={25}/>
+                <AiOutlineEdit className="icon" size={25}/>
+                <AiOutlineDelete className="icon" size={25}/>
             </div>
         </div>
     )

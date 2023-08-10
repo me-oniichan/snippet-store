@@ -23,3 +23,11 @@
     color: var(--glow);
     text-shadow: 0 0 12px var(--glow);
 }
+
+.icon{
+    margin: 5px;
+}
+
+.icon:hover{
+    color: white;
+}
