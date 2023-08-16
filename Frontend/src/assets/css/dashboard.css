@@ -1,91 +1,39 @@
 .dashboard-container{
-    margin: 50px;
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    height: 99vh;
+}
+.codeview{
+    height: 99vh;
+    width: 100%;
 }
 
-.greeting{
-    margin: 20px;
-    display: inline-block;
-    width: 250px;
+.seperator{
+    width: 10px;
+    height: 100%;
+    background-color: var(--bg-tertiary);
 }
 
-.greeting .text{
-    font-size: 30px;
-    font-weight: bold;
-}
-
-.lang{
-    margin-top: 10px;
-    margin-bottom: 5px;
-}
-
-.langs{
-    display: flex;
-    flex-wrap: wrap;
-}
-
-.langs span{
-    padding: 5px;
-}
-
-.snippet-list{
-    gap: 20px;
-    margin: 20px;
-    justify-content: center;
-    display: grid;
-    flex-wrap: wrap;
-    grid-template-columns: 500px 500px;
-}
-
-@media screen and (max-width: 1200px){
-    .snippet-list{
-        grid-template-columns: 500px;
-    }
+.list-snippets{
+    width: 1500px;
 }
 
 .snippet-card{
-    width: 500px;
-    border: 1px solid var(--border-color);
-    background-color: var(--bg-secondary);
-    border-radius: 10px;
-    transition: 300ms;
-    display: flex;
     flex-direction: column;
-}
-
-
-.snippet-header{
-    font-size: 20px;
-    font-weight: bold;
-    padding: 10px;
-    border-bottom: 1px solid var(--border-color);
-    transition: 300ms;
-    background-color: var(--bg-tertiary);
-    border-radius: 15px 15px 0 0;
-}
-
-.snippet-content{
-    padding: 15px;
+    align-content: space-around;
     background-color: var(--bg-secondary);
-    max-height: 500px;
-    overflow: scroll;
-}
-.snippet-card:hover{
-    box-shadow: 0 0 10px 1px var(--glow);
-    border-color: var(--glow);
-}
-
-.snippet-card:hover .snippet-header{
-    border-color: var(--glow);
-    color: white;
+    border: 1px solid grey;
+    border-radius: 10px;
+    padding: 10px;
+    padding-left: 15px;
+    margin: 10px;
 }
 
-.snippet-footer{
-    margin-top: auto;
-    background-color: var(--bg-tertiary);
-    border-radius: 0 0 15px 15px;
-    display: flex;
-    justify-content: end;
+.title{
+    color: var(--text);
+    font: 20px sans;
+    margin-bottom: 15px;
+}
+
+.lang{
+    color: text;
 }

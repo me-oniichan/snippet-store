@@ -5,7 +5,9 @@ import { AiOutlineReload } from "react-icons/ai";
 import { GiStarFormation } from "react-icons/gi";
 
 interface editorProp {
-  readOnly: boolean;
+  readOnly: boolean,
+  children: string,
+  language: string
 }
 
 export default function CodeArea(props: editorProp) {
@@ -37,8 +39,8 @@ export default function CodeArea(props: editorProp) {
         <select
           className="language"
           id="language"
-          defaultValue="plaintext"
           onChange={changeLang}
+          defaultValue={props.language}
         >
           <option value="plaintext">plaintext</option>
           <option value="python">python</option>
@@ -146,12 +148,13 @@ export default function CodeArea(props: editorProp) {
 
       <Editor
         theme="vs-dark"
-        language="plaintext"
+        language={props.language}
         onMount={mount}
         options={{
           readOnly: props.readOnly,
           fontFamily: "Fira Code",
         }}
+        value={props.children}
       />
       <div className="editor-footer"></div>
     </div>

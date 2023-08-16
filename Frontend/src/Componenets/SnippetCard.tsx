@@ -1,23 +1,14 @@
-import { AiOutlineEdit, AiOutlineDelete} from "react-icons/ai"
-
-interface snippetData{
-    children : string;
+interface cardProp{
+    language: string,
+    title: string,
+    seleced: boolean
 }
 
-export default function SnippetCard(props : snippetData){
+export default function(props: cardProp){
     return(
-        <div className="snippet-card">
-            <div className="snippet-header">
-                Title
-            </div>
-            <div className="snippet-content">
-                {props.children}
-            </div> 
-
-            <div className="snippet-footer">
-                <AiOutlineEdit className="icon" size={25}/>
-                <AiOutlineDelete className="icon" size={25}/>
-            </div>
+        <div className="snippet-card" style={ props.seleced? {borderColor: "var(--glow)"}:{}}>
+            <div className="title">{props.title}</div>
+            <div className="lang">{props.language}</div>
         </div>
     )
 }

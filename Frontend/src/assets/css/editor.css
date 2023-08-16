@@ -1,14 +1,11 @@
 .editor{
-    height: 500px;
-    margin: 50px;
+    height: 100vh;
 }
-
 .editor-header{
     display: flex;
     justify-content: space-between;
     padding: 3px;
-    background: var(--bg-tertiary);
-    border-radius: 10px 10px 0 0;
+    background: var(--bg-secondary);
     align-items: center;
 }
 
@@ -17,7 +14,7 @@
 }
 
 .language{
-    background: var(--bg-tertiary);
+    background: var(--bg-secondary);
     height: 25px;
     width: 100px;
     border: none;
