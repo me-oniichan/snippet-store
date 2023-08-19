@@ -4,7 +4,7 @@ from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
-from main.models import Users, Snippets, SnippetData
+from main.models import Users, Snippets, SnippetData, UserData
 import uuid
 
 
@@ -26,7 +26,7 @@ def redirect_home(request, exception):
 
 def create(request):
     if not request.session.exists(request.session.session_key):
-        redirect("/")
+        redirect("/login")
 
     return render(request, "create.html")
 
@@ -68,3 +68,27 @@ def user_dashboard(request):
         })
     except Users.DoesNotExist:
         return render(request, "index.html")
+
+def getUser(request):
+    try:
+        return request.session["userid"]
+    except:
+        return Users.objects.get(unique_name="oniibhai").unique_id
+
+
+def getData(request):
+    userid = getUser(request)
+
+    user = Users.objects.get(unique_id=userid)
+    #double db hit req
+    displayname = UserData.objects.get(unique_id=user).display_name
+    snips = [snip.snippet_id for snip in Snippets.objects.filter(unique_id=user)]
+
+    response = {
+        "username": user.unique_name,
+        "displayname": displayname,
+        "snippets" : snips,
+    }
+
+    return JsonResponse(response)
+    

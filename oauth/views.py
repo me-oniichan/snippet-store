@@ -86,7 +86,6 @@ def new_user(request):
 
     return redirect("/")
 
-
 def login(request):
     if request.session.exists(request.session.session_key):
         unique_id = request.session["userid"]

@@ -13,7 +13,8 @@ urlpatterns = [
     path('signup/', sign_up),
 
     path('create', create),
-    path('submit_snippet', save_snippet)
+    path('submit_snippet', save_snippet),
+    path("get_data", getData)
 ]
 
 handler404 = "main.views.redirect_home"

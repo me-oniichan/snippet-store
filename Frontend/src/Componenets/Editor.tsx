@@ -24,7 +24,7 @@ export default function CodeArea(props: editorProp) {
   };
 
   const changeLang = (element: any) => {
-    if (monaco && editorRef.current) {
+    if (monaco) {
       monaco.editor.setModelLanguage(
         editorRef.current.getModel(),
         element.target.value
