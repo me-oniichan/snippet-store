@@ -6,22 +6,35 @@ import Header from "./Componenets/Header";
 import CodeArea from "./Componenets/Editor";
 import { useEffect } from "react";
 import axios from "axios";
+import { DispatchState } from "./Context/Store";
+import { useAppDispatch } from "./Context/storeEvents";
+import { updateUserData } from "./Context/userContext";
+import { loadSnippets } from "./Context/snippetContext";
+// import { loadSnippets } from "./Context/snippetContext";
+
 
 function App() {
+  const dispatch : DispatchState = useAppDispatch();
+
   useEffect(()=>{
     axios({
       method: 'get',
       url: `http://127.0.0.1:8000/get_data`,
       headers : {
         "Content-Type" : "application/json",
-        // "Access-Control-Allow-Origin": "*",
-        // "Access-Control-Allow-Headers": "Origin",
       }
     }).then(res=>{
-      console.log(res);
+      // console.log(res.data);
+      dispatch(updateUserData({
+        username : res.data.username,
+        displayname : res.data.displayname
+      }))
+      console.log(res.data);
       
+      dispatch(loadSnippets(res.data.snippets))
     })
-  })
+  }, [])
+
   return (
     <>
       <Header />
@@ -29,7 +42,7 @@ function App() {
         <Routes>
           <Route path="/" Component={Dashboard} />
           <Route path="/create" />
-          <Route path="/editor" element={<CodeArea readOnly={false} language="plaintext"/>} />
+          <Route path="/editor" element={<CodeArea readOnly={false}language="plaintext"/>} />
         </Routes>
       </Router>
     </>

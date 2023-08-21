@@ -82,7 +82,14 @@ def getData(request):
     user = Users.objects.get(unique_id=userid)
     #double db hit req
     displayname = UserData.objects.get(unique_id=user).display_name
-    snips = [snip.snippet_id for snip in Snippets.objects.filter(unique_id=user)]
+    snipids = Snippets.objects.filter(unique_id=user)
+    snips = [{
+            "title" : data.title,
+            "code" : data.text,
+            "language" : data.language,
+            "description": data.description,
+            "forked_from": data.forked_from
+        } for data in SnippetData.objects.filter(snippet_id__in=snipids)]
 
     response = {
         "username": user.unique_name,
@@ -91,4 +98,22 @@ def getData(request):
     }
 
     return JsonResponse(response)
-    
+
+
+def getSnippet(request, snippetid):
+    try:
+        snipid  = Snippets.objects.get(snippet_id=snippetid)  
+        data = SnippetData.objects.get(snippet_id=snipid)
+        response = {
+            "title" : data.title,
+            "code" : data.text,
+            "language" : data.language,
+            "description": data.description,
+            "forked_from": data.forked_from
+        }
+        return JsonResponse(response)
+
+    except Snippets.DoesNotExist | SnippetData.DoesNotExist:
+        return JsonResponse({
+            "message": "could not find what you requested for"
+        }, status= 404)
