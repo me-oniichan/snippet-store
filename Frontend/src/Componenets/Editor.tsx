@@ -32,7 +32,7 @@ export default function CodeArea(props: editorProp) {
     }
   };
 
-  console.log(props.readOnly);
+  console.log(props.language);
   return (
     <div className="editor">
       <div className="editor-header">
@@ -40,7 +40,7 @@ export default function CodeArea(props: editorProp) {
           className="language"
           id="language"
           onChange={changeLang}
-          defaultValue={props.language}
+          value={props.language}
         >
           <option value="plaintext">plaintext</option>
           <option value="python">python</option>
@@ -153,6 +153,7 @@ export default function CodeArea(props: editorProp) {
         options={{
           readOnly: props.readOnly,
           fontFamily: "Fira Code",
+          fontSize: 18,
         }}
         value={props.children}
       />
