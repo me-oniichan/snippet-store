@@ -31,3 +31,20 @@
 .icon:hover{
     color: white;
 }
+
+.dashboard-container{
+    display: flex;
+    height: 100%;
+    /* overflow: hidden; */
+}
+.codeview{
+    height: 100%;
+    width: 100%;
+}
+
+.seperator{
+    width: 10px;
+    height: 100%;
+    display: block;
+    background-color: var(--bg-tertiary);
+}

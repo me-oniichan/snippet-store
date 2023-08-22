@@ -1,0 +1,39 @@
+.details{
+    width: 1000px;
+    padding: 10px;
+    height: 80vh;
+    box-sizing: border-box;
+}
+
+.label{
+    font-size: 20px;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.property{
+    margin: 10px;
+    box-sizing: border-box;
+}
+
+input, textarea{
+    outline: none;
+    border: 1px solid var(--text-color);
+    background: var(--bg-primary);
+    color: var(--text-color);
+    font-size: 18px;
+    padding: 5px;
+    border-radius: 5px;
+    resize: none;
+    margin: 5px;
+    width: 90%;
+}
+
+input:focus, textarea:focus{
+    border-color: var(--glow);
+}
+
+textarea{
+    box-sizing: border-box;
+}

@@ -1,4 +1,3 @@
-import { useState } from "react";
 import CodeArea from "./Editor";
 import SelectionFile from "./SelectionFile";
 import { useAppSelector } from "../Context/storeEvents";

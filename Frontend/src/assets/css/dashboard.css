@@ -1,18 +1,3 @@
-.dashboard-container{
-    display: flex;
-    height: 99vh;
-}
-.codeview{
-    height: 99vh;
-    width: 100%;
-}
-
-.seperator{
-    width: 10px;
-    height: 100%;
-    background-color: var(--bg-tertiary);
-}
-
 .list-snippets{
     width: 1500px;
 }
@@ -36,4 +21,5 @@
 
 .lang{
     color: text;
+    text-transform: capitalize;
 }
