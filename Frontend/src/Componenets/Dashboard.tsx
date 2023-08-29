@@ -9,9 +9,15 @@ export default function Dashboard() {
   return (
     <div className="dashboard-container">
       <SelectionFile />
-      <div className="seperator"></div>
-      <div className="codeview">
-        <CodeArea readOnly={true} language={snippet.language}>
+      {/* <div className="seperator"></div> */}
+      <div className="codeview" style={{flexDirection:"column-reverse"}}>
+        <div className="description-area">
+          <div style={{fontSize: 20, margin: 10, color: "beige"}}>
+            Description
+          </div>
+          <textarea className="text" readOnly={true} value={snippet.description}></textarea>
+        </div>
+        <CodeArea readOnly={true} language={snippet.language} height="60vh">
             {snippet.code}
         </CodeArea>
       </div>

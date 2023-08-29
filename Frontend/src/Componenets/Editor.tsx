@@ -8,11 +8,10 @@ interface editorProp {
   readOnly: boolean;
   children: string;
   language: string;
-  callback?: any;
+  height: string;
 }
 
-// export default forwardRef((props: editorProp, ref: any) => {
-export default function CodeArea(props: editorProp){
+export default forwardRef((props: editorProp, ref) => {
   const editorRef: any = useRef();
   const monaco = useMonaco();
 
@@ -27,7 +26,7 @@ export default function CodeArea(props: editorProp){
       noSemanticValidation: true,
       noSyntaxValidation: true,
     });
-    // if (ref) ref.current = editor;
+    if (ref) ref.current = editor;
     editorRef.current = editor;
   };
 
@@ -42,7 +41,7 @@ export default function CodeArea(props: editorProp){
   };
 
   return (
-    <div className="editor">
+    <div className="editor" style={{height: props.height}}>
       <div className="editor-header">
         <select
           className="language"
@@ -102,14 +101,6 @@ export default function CodeArea(props: editorProp){
         </select>
 
         <div className="editor-options">
-          {props.callback ? (
-            <button className="submit" onClick={()=>props.callback(editorRef.current.getValue(), language)}>
-              Submit
-            </button>
-          ) : (
-            ""
-          )}
-
           {!props.readOnly ? (
             <AiOutlineReload
               size={20}
@@ -144,8 +135,9 @@ export default function CodeArea(props: editorProp){
           fontSize: 18,
         }}
         value={props.children}
+        height="100%"
       />
-      <div className="editor-footer"></div>
+      {/* <div className="editor-footer"></div> */}
     </div>
   );
-};
+});

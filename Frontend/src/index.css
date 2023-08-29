@@ -5,3 +5,7 @@ body{
     color: var(--text-color);
     font-family: sans-serif;
 }
+
+#root{
+    height: 90vh;
+}

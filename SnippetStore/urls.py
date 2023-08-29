@@ -14,7 +14,8 @@ urlpatterns = [
 
     path('create', create),
     path('submit_snippet', save_snippet),
-    path("get_data", getData)
+    path("get_data", getData),
+    path('add_snippet', setSnippet)
 ]
 
 handler404 = "main.views.redirect_home"

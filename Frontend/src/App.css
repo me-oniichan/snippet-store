@@ -2,7 +2,8 @@
     background-color: var(--bg-tertiary);
     display: flex;
     justify-content: space-between;
-    height: 60px;
+    height: 40px;
+    /* position: fixed; */
 }
 
 .store-logo{
@@ -38,13 +39,19 @@
     /* overflow: hidden; */
 }
 .codeview{
-    height: 100%;
-    width: 100%;
+    height: calc(100% - 40px);
+    width: 50%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 40px;
+    right: 0;
 }
 
 .seperator{
     width: 10px;
-    height: 100%;
+    height: calc(90vh + 30px);
     display: block;
     background-color: var(--bg-tertiary);
 }

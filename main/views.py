@@ -35,9 +35,9 @@ def create(request):
 def save_snippet(request):
     if request.method == "POST":
         data = json.loads(request.body)
-        user = Users.objects.get(unique_id=request.session["userid"])
+        user = Users.objects.get(unique_id=getUser(request))
         code = data["code"]
-        lang = data["lang"]
+        lang = data["language"]
         title = data["title"]
 
         if not len(code):
@@ -117,3 +117,11 @@ def getSnippet(request, snippetid):
         return JsonResponse({
             "message": "could not find what you requested for"
         }, status= 404)
+
+@csrf_exempt
+def setSnippet(request):
+    userid = getUser(request)
+    print(request.body)
+    return JsonResponse({
+        "message": "success"
+    })

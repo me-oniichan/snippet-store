@@ -1,5 +1,7 @@
 .editor{
-    height: 90vh;
+    height: 100vh;
+    border-left: 10px solid var(--bg-secondary);
+    overflow: hidden;
 }
 .editor-header{
     display: flex;
@@ -28,21 +30,4 @@
 
 option{
     text-transform: capitalize;
-}
-
-.submit{
-    background-color: var(--fg-secondary);
-    outline: none;
-    border: 1px solid var(--bg-tertiary);
-    padding: 5px;
-    width: 60px;
-    border-radius: 5px;
-    color: var(--bg-primary);
-    font-size: 15px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.submit:active{
-    background-color: var(--fg-primary);
 }
