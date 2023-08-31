@@ -55,6 +55,26 @@ def save_snippet(request):
 
         return JsonResponse({"message": "done"})
 
+@csrf_exempt
+def del_snippet(request):
+    try:
+        data = json.loads(request.body)
+        userid = getUser(request)
+        user = Users.objects.get(unique_id=userid)
+        Snippets.objects.get(unique_id=user, snippet_id=data["id"]).delete()
+        return JsonResponse({
+            "message": "done"
+        })
+    except (Snippets.DoesNotExist, Users.DoesNotExist) as e:
+        print(e)
+        return JsonResponse({
+            "message" : "something not right"
+        }, status = 403)
+
+    except Exception as e:
+        print(e)
+
+
 
 def user_dashboard(request):
     try:
@@ -78,12 +98,13 @@ def getUser(request):
 
 def getData(request):
     userid = getUser(request)
-
     user = Users.objects.get(unique_id=userid)
+
     #double db hit req
     displayname = UserData.objects.get(unique_id=user).display_name
     snipids = Snippets.objects.filter(unique_id=user)
     snips = [{
+            "id": data.snippet_id_id,
             "title" : data.title,
             "code" : data.text,
             "language" : data.language,
@@ -105,6 +126,7 @@ def getSnippet(request, snippetid):
         snipid  = Snippets.objects.get(snippet_id=snippetid)  
         data = SnippetData.objects.get(snippet_id=snipid)
         response = {
+            "id": snipid.snippet_id,
             "title" : data.title,
             "code" : data.text,
             "language" : data.language,
@@ -117,11 +139,3 @@ def getSnippet(request, snippetid):
         return JsonResponse({
             "message": "could not find what you requested for"
         }, status= 404)
-
-@csrf_exempt
-def setSnippet(request):
-    userid = getUser(request)
-    print(request.body)
-    return JsonResponse({
-        "message": "success"
-    })

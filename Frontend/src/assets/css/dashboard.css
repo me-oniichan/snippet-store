@@ -4,7 +4,6 @@
 }
 
 .snippet-card{
-    flex-direction: column;
     align-content: space-around;
     background-color: var(--bg-secondary);
     border: 1px solid grey;
@@ -12,6 +11,19 @@
     padding: 10px;
     padding-left: 15px;
     margin: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.options svg{
+    font-size: 27px;
+    margin: 10px;
+    cursor: pointer;
+}
+
+.options svg:hover{
+    filter: saturate(50);
 }
 
 .title{
@@ -40,4 +52,6 @@
     border-radius: 5px;
     border: 1px solid var(--glow);
     height: 30vh;
+    box-sizing: border-box;
+    width: 98%;
 }

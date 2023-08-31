@@ -1,7 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-
 interface snippetState{
-    // snippetid : string,
+    id : string,
     title: string,
     description : string,
     // TODO: update later for lazy loading
@@ -39,7 +38,10 @@ export const snipetSlice = createSlice({
         },
 
         removeSnippet: (state, action: PayloadAction<number>)=>{
-            state.snippets = state.snippets.filter((snippet, index)=> action.payload!==index)
+            state.snippets = state.snippets.filter((_, idx)=> idx!=action.payload)
+            if (state.snippets.length === state.selected){
+                state.selected--;
+            }
         },
         updateSnippet: (state, action: PayloadAction<{index: number, snippet: snippetState}>)=>{
             state.snippets[action.payload.index]= action.payload.snippet
