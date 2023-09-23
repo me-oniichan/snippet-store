@@ -20,6 +20,11 @@
     font-weight: 500;
 }
 
+.header-option{
+  text-decoration: none;
+  color:var(--text);  
+}
+
 .header-option:hover{
     color: var(--glow);
     text-shadow: 0 0 12px var(--glow);

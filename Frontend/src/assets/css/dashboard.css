@@ -16,14 +16,14 @@
     justify-content: space-between;
 }
 
-.options svg{
+.icons{
     font-size: 27px;
     margin: 10px;
     cursor: pointer;
 }
 
-.options svg:hover{
-    filter: saturate(50);
+.icons:hover{
+    filter: saturate(70);
 }
 
 .title{

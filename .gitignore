@@ -25,3 +25,4 @@ dist-ssr
 
 /oauth/credentials.json
 /Frontend/package-lock.json
+try.py

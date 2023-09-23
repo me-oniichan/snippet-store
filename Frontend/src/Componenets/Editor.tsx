@@ -11,7 +11,7 @@ interface editorProp {
   height: string;
 }
 
-export default forwardRef((props: editorProp, ref) => {
+export default forwardRef((props: editorProp, ref: any) => {
   const editorRef: any = useRef();
   const monaco = useMonaco();
 
@@ -41,7 +41,7 @@ export default forwardRef((props: editorProp, ref) => {
   };
 
   return (
-    <div className="editor" style={{height: props.height}}>
+    <div className="editor" style={{ height: props.height }}>
       <div className="editor-header">
         <select
           className="language"
@@ -133,11 +133,19 @@ export default forwardRef((props: editorProp, ref) => {
           domReadOnly: true,
           fontFamily: "Fira Code",
           fontSize: 18,
+          showUnused: false,
+          showDeprecated: false,
+          minimap: {
+            enabled: false,
+          },
+          scrollbar: {
+            horizontal: "visible",
+            vertical: "visible"
+          }
         }}
         value={props.children}
-        height="100%"
+        height="95%"
       />
-      {/* <div className="editor-footer"></div> */}
     </div>
   );
 });

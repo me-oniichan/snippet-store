@@ -3,11 +3,13 @@ import { useState } from "react"
 import "../assets/css/create.css"
 import CodeArea from "./Editor"
 import axios, { AxiosResponse } from "axios"
+import { useNavigate } from "react-router-dom"
 
 export default function(){
     const editorRef : {current: any} = useRef()
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
+    const navigate = useNavigate()
 
     const submit = async () =>{
         const data = {
@@ -23,7 +25,7 @@ export default function(){
             data,
         }).then((res: AxiosResponse)=>{
             if (res.status == 200){
-                console.log("done");
+                navigate("/")
             }
         })
     }
