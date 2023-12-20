@@ -2,7 +2,8 @@
     background-color: var(--bg-tertiary);
     display: flex;
     justify-content: space-between;
-    height: 60px;
+    height: 40px;
+    /* position: fixed; */
 }
 
 .store-logo{
@@ -19,7 +20,43 @@
     font-weight: 500;
 }
 
+.header-option{
+  text-decoration: none;
+  color:var(--text);  
+}
+
 .header-option:hover{
     color: var(--glow);
     text-shadow: 0 0 12px var(--glow);
+}
+
+.icon{
+    margin: 5px;
+}
+
+.icon:hover{
+    color: white;
+}
+
+.dashboard-container{
+    display: flex;
+    height: 100%;
+    /* overflow: hidden; */
+}
+.codeview{
+    height: calc(100% - 40px);
+    width: 50%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 40px;
+    right: 0;
+}
+
+.seperator{
+    width: 10px;
+    height: calc(90vh + 30px);
+    display: block;
+    background-color: var(--bg-tertiary);
 }

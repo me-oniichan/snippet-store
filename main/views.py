@@ -4,7 +4,7 @@ from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
-from main.models import Users, Snippets, SnippetData
+from main.models import Users, Snippets, SnippetData, UserData
 import uuid
 
 
@@ -26,7 +26,7 @@ def redirect_home(request, exception):
 
 def create(request):
     if not request.session.exists(request.session.session_key):
-        redirect("/")
+        redirect("/login")
 
     return render(request, "create.html")
 
@@ -35,9 +35,9 @@ def create(request):
 def save_snippet(request):
     if request.method == "POST":
         data = json.loads(request.body)
-        user = Users.objects.get(unique_id=request.session["userid"])
+        user = Users.objects.get(unique_id=getUser(request))
         code = data["code"]
-        lang = data["lang"]
+        lang = data["language"]
         title = data["title"]
 
         if not len(code):
@@ -55,6 +55,26 @@ def save_snippet(request):
 
         return JsonResponse({"message": "done"})
 
+@csrf_exempt
+def del_snippet(request):
+    try:
+        data = json.loads(request.body)
+        userid = getUser(request)
+        user = Users.objects.get(unique_id=userid)
+        Snippets.objects.get(unique_id=user, snippet_id=data["id"]).delete()
+        return JsonResponse({
+            "message": "done"
+        })
+    except (Snippets.DoesNotExist, Users.DoesNotExist) as e:
+        print(e)
+        return JsonResponse({
+            "message" : "something not right"
+        }, status = 403)
+
+    except Exception as e:
+        print(e)
+
+
 
 def user_dashboard(request):
     try:
@@ -68,3 +88,54 @@ def user_dashboard(request):
         })
     except Users.DoesNotExist:
         return render(request, "index.html")
+
+def getUser(request):
+    try:
+        return request.session["userid"]
+    except:
+        return Users.objects.get(unique_name="oniibhai").unique_id
+
+
+def getData(request):
+    userid = getUser(request)
+    user = Users.objects.get(unique_id=userid)
+
+    #double db hit req
+    displayname = UserData.objects.get(unique_id=user).display_name
+    snipids = Snippets.objects.filter(unique_id=user)
+    snips = [{
+            "id": data.snippet_id_id,
+            "title" : data.title,
+            "code" : data.text,
+            "language" : data.language,
+            "description": data.description,
+            "forked_from": data.forked_from
+        } for data in SnippetData.objects.filter(snippet_id__in=snipids)]
+
+    response = {
+        "username": user.unique_name,
+        "displayname": displayname,
+        "snippets" : snips,
+    }
+
+    return JsonResponse(response)
+
+
+def getSnippet(request, snippetid):
+    try:
+        snipid  = Snippets.objects.get(snippet_id=snippetid)  
+        data = SnippetData.objects.get(snippet_id=snipid)
+        response = {
+            "id": snipid.snippet_id,
+            "title" : data.title,
+            "code" : data.text,
+            "language" : data.language,
+            "description": data.description,
+            "forked_from": data.forked_from
+        }
+        return JsonResponse(response)
+
+    except Snippets.DoesNotExist | SnippetData.DoesNotExist:
+        return JsonResponse({
+            "message": "could not find what you requested for"
+        }, status= 404)
