@@ -21,7 +21,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-
+__pycache__
 
 /oauth/credentials.json
 /Frontend/package-lock.json
