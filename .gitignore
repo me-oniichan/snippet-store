@@ -22,7 +22,7 @@ dist-ssr
 *.sln
 *.sw?
 
-
+__pycache__
 /oauth/credentials.json
 /Frontend/package-lock.json
 try.py
