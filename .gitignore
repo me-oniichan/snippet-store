@@ -1,29 +1,15 @@
-# Logs
-logs
+# Django #
 *.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
+*.pot
+*.pyc
+__pycache__
+db.sqlite3
+media
+pip-log.txt 
+pip-delete-this-directory.txt 
+**/migrations
+*.DS_Store
+**/__pycache__
+**/.DS_Store
 
 node_modules
-dist
-dist-ssr
-*.local
-
-# Editor directories and files
-.vscode/*
-.idea
-.DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
-
-__pycache__
-
-/oauth/credentials.json
-/Frontend/package-lock.json
-try.py
