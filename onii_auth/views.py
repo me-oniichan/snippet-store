@@ -1,11 +1,9 @@
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ValidationError
-from django.http import HttpResponseNotAllowed
 from django.http.request import HttpRequest
 from django.http.response import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.shortcuts import redirect, render
-from django.contrib.auth import login, logout
-from django.contrib.auth.decorators import login_required
-from rest_framework.mixins import status
 
 from .models import Users
 # Create your views here.
@@ -13,16 +11,27 @@ from .models import Users
 def home(request):
     return HttpResponse("<h1>This is home page</h1>")
 
-def signup(request: HttpRequest):
+def signup_page(request: HttpRequest):
+    '''Let User sign up'''
+    #redirect if user is already logged in
+    if Users.objects.filter(id = request.user.id).exists():
+        return HttpResponse(f"<h1>{request.user.username} you exist!!!</h1>")
     return render(request, template_name='signup.html')
 
-def signin(request: HttpRequest):
-    pass
+
+
+def signin_page(request: HttpRequest):
+    '''Let User login'''
+    #redirect if user is already logged in
+    if Users.objects.filter(id = request.user.id).exists():
+        return HttpResponse(f"<h1>{request.user.username} you exist!!!</h1>")
+    return render(request, template_name="login.html")
+
 
 def add_user(request: HttpRequest):
     if request.method != "POST":
         HttpResponseBadRequest('Bad Request.')
-    
+
     try:
         user = Users.objects.create_user(
             username=request.POST['username'],
@@ -41,11 +50,12 @@ def add_user(request: HttpRequest):
             "message": err.messages
         }, status=400)
 
+
 @login_required(redirect_field_name="/")
-def logout_user(request):
+def logout_user(request) -> HttpResponse:
     try:
         logout(request)
     except Exception as err:
         print(err)
-        return "An error occured"
+        return HttpResponse("something unexpected happen")
     return redirect("/")

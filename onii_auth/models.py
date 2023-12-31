@@ -1,4 +1,3 @@
-from django.core.validators import validate_email
 from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 
@@ -9,17 +8,17 @@ from onii_auth.utils import password_validation, username_validation
 class UserManager(BaseUserManager):
     def create_user(self, username, password, email, display_name=''):
         email = self.normalize_email(email)
-        validate_email(email)
         password_validation(password)
-        username_validation(username)
         
         user: Users = self.model(username=username, display_name=display_name)
         user.set_password(password)
+        user.full_clean()
         user.save() 
         return user
 
 class Users(AbstractUser):
     last_name = None
     first_name = None
+    username = models.CharField(unique=True, max_length=25, validators=[username_validation])
     display_name = models.CharField(max_length=30, blank=True)
     objects: UserManager = UserManager()
