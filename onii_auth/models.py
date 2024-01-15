@@ -1,3 +1,4 @@
+from django.core.validators import validate_email
 from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 
@@ -10,7 +11,7 @@ class UserManager(BaseUserManager):
         email = self.normalize_email(email)
         password_validation(password)
         
-        user: Users = self.model(username=username, display_name=display_name)
+        user: Users = self.model(username=username, display_name=display_name, email=email)
         user.set_password(password)
         user.full_clean()
         user.save() 
@@ -21,4 +22,6 @@ class Users(AbstractUser):
     first_name = None
     username = models.CharField(unique=True, max_length=25, validators=[username_validation])
     display_name = models.CharField(max_length=30, blank=True)
+    email = models.EmailField(unique=True, validators=[validate_email])
+
     objects: UserManager = UserManager()
