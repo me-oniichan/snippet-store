@@ -3,6 +3,7 @@
 *.pot
 *.pyc
 .venv
+env
 __pycache__
 db.sqlite3
 media

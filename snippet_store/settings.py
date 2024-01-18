@@ -32,12 +32,13 @@ AUTH_USER_MODEL = "onii_auth.Users"
 
 INSTALLED_APPS = [
     'django.contrib.admin',
+    'onii_auth',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'onii_auth'
+    'onii_store'
 ]
 
 MIDDLEWARE = [
