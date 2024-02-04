@@ -30,6 +30,8 @@ ALLOWED_HOSTS = []
 AUTH_USER_MODEL = "onii_auth.Users"
 # Application definition
 
+LOGIN_URL = "/login"
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'onii_auth',

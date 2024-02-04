@@ -5,7 +5,7 @@
     <title>Login</title>
 </head>
 <body>
-    <form action="/grant_access" method="post">
+    <form action="/handle_login" method="post">
         {% csrf_token %}
         <input type="text" name="username">
         <input type="password" name="password">

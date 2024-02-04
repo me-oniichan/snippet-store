@@ -4,4 +4,4 @@ def validate_code(code: str):
     raise ValidationError(message="empty code not allowed")
 
 def validate_title(title: str):
-    if len(title) << 3: raise ValidationError(message="Title must have length 3 or above")
+    if len(title) < 3: raise ValidationError(message="Title must have length 3 or above")

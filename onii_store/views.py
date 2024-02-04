@@ -1,16 +1,11 @@
-from curses import OK
-from email import message
-from telnetlib import STATUS
-from turtle import title
-
 from django.forms import ValidationError
+from django.http.response import HttpResponseNotAllowed
 from onii_auth.models import Users
 from django.shortcuts import render
-from django.http import HttpRequest, JsonResponse
+from django.http import HttpRequest, HttpResponseForbidden, HttpResponseNotFound, JsonResponse
 from models import Snippets
 from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import authenticate
 # Create your views here.
 
 def get_snippet(request: HttpRequest, snippet_id : str):
@@ -55,12 +50,73 @@ def save_snippet(request: HttpRequest):
     try:
         snippet = Snippets.objects.create(title=snippet.title, code=snippet.code, desc = snippet.desc, author=request.user, language=snippet.language)
         
-        return JsonResponse(status = 200)
+        return JsonResponse({
+            "message": "ok"
+        })
     except ValidationError as err:
         return JsonResponse({"message":err.message}, status = 00)
 
-
+@require_POST
 @login_required
 def delete_snippet(request: HttpRequest):
     '''Remove a Snippet from db'''
-    pass 
+    try:
+        snippet = Snippets.objects.get(pk = request.POST["snippet_id"])
+        if snippet.author != request.user:
+            return HttpResponseForbidden()
+
+        snippet.delete()
+        return JsonResponse({
+            "message": "ok"
+        })
+    except Snippets.DoesNotExist:
+        return HttpResponseNotFound()
+
+@require_POST
+@login_required
+def fork(request: HttpRequest):
+    '''Fork a snippet from another user'''
+    try:
+        source_snippet = Snippets.objects.get(pk = request.POST["source_id"])
+        target_snippet = Snippets.objects.create(
+            title=source_snippet.title,
+            code=source_snippet.text,
+            desc=source_snippet.description,
+            author = request.user,
+            language = source_snippet.language
+        )
+        
+        return JsonResponse({
+            "message": "ok",
+            "snippet_id": target_snippet.pk
+        })
+
+    except Snippets.DoesNotExist:
+        return HttpResponseNotFound()
+
+@require_POST
+@login_required
+def edit_snippet(request: HttpRequest):
+    '''Edit a snippet in db'''
+    try:
+        snippet = Snippets.objects.get(pk = request.POST["snippet_id"])
+        if request.user != snippet.author:
+            return HttpResponseForbidden()
+
+        snippet.title = request.POST["title"]
+        snippet.description = request.POST["description"]
+        snippet.language = request.POST["language"]
+        snippet.text = request.POST["code"]
+        snippet.clean_fields()
+        snippet.save()
+
+        return JsonResponse({
+            "messgae": "ok"
+        })
+
+    except Snippets.DoesNotExist:
+        return HttpResponseNotFound()
+    except ValidationError as verr:
+        return JsonResponse({
+            "messgae": verr.message
+        })

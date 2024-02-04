@@ -59,14 +59,17 @@ def add_user(request: HttpRequest):
         }, status=400)
 
 
-def grant_access(request: HttpRequest):
+def handle_login(request: HttpRequest):
     if request.method != "POST": return HttpResponseBadRequest()
     user = authenticate(username = request.POST["username"], password = request.POST["password"])
     print(user)
     if user:
         login(request,user)
+        return redirect("/")
+    return JsonResponse({
+        "message": "not ok"
+    }, status=401)
 
-    return redirect("/")
 
 @login_required(redirect_field_name="/")
 def logout_user(request):
