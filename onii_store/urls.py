@@ -8,6 +8,6 @@ urlpatterns = [
     path('delete', delete_snippet, name="delete-snippet"),
     path('fork', fork, name="fork"),
     path('edit', edit_snippet, name="edit-snippet"),
-    path('get-snippet', get_snippet, name="get-snippet"),
+    path('get-snippet/<int:snippet_id>', get_snippet, name="get-snippet"),
     path('get-user-snippets/<str:author>', get_user_snippets, name="get-user-snippets")
 ]

@@ -8,20 +8,23 @@ from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
 # Create your views here.
 
-def get_snippet(request: HttpRequest, snippet_id : str):
+def get_snippet(request: HttpRequest, snippet_id : int):
     '''Get a particular snippet using snippet id'''
-    snippet = Snippets.objects.get(pk = snippet_id);
-    return JsonResponse({
-        "author" : request.user.username,
-        "snippet": {
-            "language": snippet.language,
-            "code": snippet.text,
-            "title": snippet.title,
-            "description": snippet.description,
-            "create_date": str(snippet.create_date),
-            "owned": request.user == snippet.author
-        }
-    })
+    try:
+        snippet = Snippets.objects.get(pk = snippet_id);
+        return JsonResponse({
+            "author" : request.user.username,
+            "snippet": {
+                "language": snippet.language,
+                "code": snippet.text,
+                "title": snippet.title,
+                "description": snippet.description,
+                "create_date": str(snippet.create_date),
+                "owned": request.user == snippet.author
+            }
+        })
+    except Snippets.DoesNotExist:
+        return HttpResponseNotFound();
 
 def get_user_snippets(request: HttpRequest, author: str):
     '''Get snippets for an User'''
@@ -53,9 +56,8 @@ def save_snippet(request: HttpRequest):
             author=request.user,
             language=request.POST["language"]
         )
-        print(snippet.author.username) 
         return JsonResponse({
-            "message": "ok"
+            "snippet_id": snippet.pk
         })
     except ValidationError as err:
         return JsonResponse({"message":err.message}, status = 400)
@@ -66,7 +68,6 @@ def delete_snippet(request: HttpRequest):
     '''Remove a Snippet from db'''
     try:
         snippet = Snippets.objects.get(pk = request.POST["snippet_id"])
-        print(snippet.author.username)
         if snippet.author != request.user:
             return HttpResponseForbidden()
 
