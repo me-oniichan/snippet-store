@@ -14,4 +14,4 @@ pip-delete-this-directory.txt
 **/__pycache__
 **/.DS_Store
 
-node_modules
+Frontend/node_modules
