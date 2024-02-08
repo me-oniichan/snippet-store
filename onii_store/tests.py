@@ -30,7 +30,8 @@ class SnipetOperationAsLogedInUser(TestCase):
             fn main(){
                 println!("Sample code");
             }
-            '''
+            ''',
+            "prefix": "pref"
         })
 
         self.assertEqual(200, response.status_code)

@@ -5,3 +5,7 @@ def validate_code(code: str):
 
 def validate_title(title: str):
     if len(title) < 3: raise ValidationError(message="Title must have length 3 or above")
+
+def validate_prefix(prefix: str):
+    if len(prefix) > 10: raise ValidationError(message="prefix can have maximum 10 characters")
+    elif prefix: raise ValidationError(message="Prefix not set")

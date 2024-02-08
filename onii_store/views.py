@@ -1,7 +1,6 @@
 from django.forms import ValidationError
-from django.http.response import HttpResponseBadRequest, HttpResponseNotAllowed
+from django.http.response import HttpResponseBadRequest
 from onii_auth.models import Users
-from django.shortcuts import render
 from django.http import HttpRequest, HttpResponseForbidden, HttpResponseNotFound, JsonResponse
 from .models import Snippets
 from django.views.decorators.http import require_POST
@@ -15,6 +14,7 @@ def get_snippet(request: HttpRequest, snippet_id : int):
         return JsonResponse({
             "author" : request.user.username,
             "snippet": {
+                "prefix": snippet.prefix,
                 "language": snippet.language,
                 "code": snippet.text,
                 "title": snippet.title,
@@ -38,7 +38,8 @@ def get_user_snippets(request: HttpRequest, author: str):
             "code": snippet.text,
             "title": snippet.title,
             "description": snippet.description,
-            "create_date": str(snippet.create_date)
+            "create_date": str(snippet.create_date),
+            "prefix": snippet.prefix
         })
     
     
@@ -54,7 +55,8 @@ def save_snippet(request: HttpRequest):
             code=request.POST["code"],
             desc=request.POST["desc"],
             author=request.user,
-            language=request.POST["language"]
+            language=request.POST["language"],
+            prefix=request.POST["prefix"]
         )
         return JsonResponse({
             "snippet_id": snippet.pk
@@ -90,7 +92,8 @@ def fork(request: HttpRequest):
             code=source_snippet.text,
             desc=source_snippet.description,
             author = request.user,
-            language = source_snippet.language
+            language = source_snippet.language,
+            prefix = source_snippet.prefix
         )
         
         return JsonResponse({
@@ -114,6 +117,7 @@ def edit_snippet(request: HttpRequest):
         snippet.description = request.POST["description"]
         snippet.language = request.POST["language"]
         snippet.text = request.POST["code"]
+        snippet.prefix = request.POST["prefix"]
         snippet.clean_fields()
         snippet.save()
 
