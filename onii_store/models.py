@@ -5,8 +5,8 @@ from onii_store.utils import validate_code, validate_prefix, validate_title
 # Create your models here.
 
 class SnippetManager(models.Manager):
-    def create(self, title: str, code: str, author: Users, language: str, prefix: str,desc: str = ""):
-        snippet: Snippets = self.model(author=author, title=title, text=code, language=language, description=desc, prefix=prefix)
+    def create(self, title: str, code: str, author: Users, language: str, prefix: str,desc: str = "", forked = None):
+        snippet: Snippets = self.model(author=author, title=title, text=code, language=language, description=desc, prefix=prefix, forked_from=forked)
         snippet.save()
         return snippet
 

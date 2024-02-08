@@ -28,22 +28,25 @@ def get_snippet(request: HttpRequest, snippet_id : int):
 
 def get_user_snippets(request: HttpRequest, author: str):
     '''Get snippets for an User'''
-    user = Users.objects.get(username=author)
-    snippets = Snippets.objects.filter(author = user);
-    response_data = {"snippets":[]}
-    
-    for snippet in snippets:
-        response_data["snippets"].append({
-            "language": snippet.language,
-            "code": snippet.text,
-            "title": snippet.title,
-            "description": snippet.description,
-            "create_date": str(snippet.create_date),
-            "prefix": snippet.prefix
-        })
-    
-    
-    return JsonResponse(response_data)
+    try:
+        user = Users.objects.get(username=author)
+        snippets = Snippets.objects.filter(author = user);
+        response_data = {"snippets":[]}
+        
+        for snippet in snippets:
+            response_data["snippets"].append({
+                "language": snippet.language,
+                "code": snippet.text,
+                "title": snippet.title,
+                "description": snippet.description,
+                "create_date": str(snippet.create_date),
+                "prefix": snippet.prefix
+            })
+        
+        
+        return JsonResponse(response_data)
+    except Users.DoesNotExist:
+        return HttpResponseNotFound()
 
 @require_POST
 @login_required
@@ -93,7 +96,8 @@ def fork(request: HttpRequest):
             desc=source_snippet.description,
             author = request.user,
             language = source_snippet.language,
-            prefix = source_snippet.prefix
+            prefix = source_snippet.prefix,
+            forked = source_snippet
         )
         
         return JsonResponse({
