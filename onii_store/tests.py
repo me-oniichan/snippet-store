@@ -12,7 +12,7 @@ class SnipetOperationAsLogedInUser(TestCase):
         self.display_name = "test_display_name"
         self.key = 0
 
-        self.client.post("/add_user", {
+        self.client.post("/onii-auth/add_user", {
             "username" : self.username,
             "password" : self.password,
             "email" : self.email,
@@ -81,4 +81,4 @@ class SnipetOperationAsAnonymusUser(TestCase):
             '''
         })
 
-        self.assertEqual(response.status_code, 401)
+        self.assertEqual(response.status_code, 302)

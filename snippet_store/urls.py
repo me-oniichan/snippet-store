@@ -7,6 +7,6 @@ from onii_auth.views import home
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home),
-    path('', include('onii_auth.urls')),
+    path('onii-auth/', include('onii_auth.urls')),
     path('onii-store/', include('onii_store.urls'))
 ]
