@@ -9,4 +9,11 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  server : {
+    proxy: {
+      '/onii/': {
+        target : "http://localhost:8000",
+      }
+    }
+  }
 })
