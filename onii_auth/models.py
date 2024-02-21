@@ -16,6 +16,12 @@ class UserManager(BaseUserManager):
         user.full_clean()
         user.save() 
         return user
+    def create_superuser(self, username, password, email, display_name=''):
+        user = self.create_user(username, password, email, display_name)
+        user.is_staff = True
+        user.is_superuser = True
+        user.save()
+        return user
 
 class Users(AbstractUser):
     last_name = None

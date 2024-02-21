@@ -11,7 +11,7 @@ export default defineConfig({
   },
   server : {
     proxy: {
-      '/onii/': {
+      '/onii-auth': {
         target : "http://localhost:8000",
       }
     }

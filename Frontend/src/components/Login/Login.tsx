@@ -3,6 +3,8 @@ import { Button } from '@/components/ui/button';
 import { Input } from '../ui/input';
 import { Card, CardContent, CardHeader } from '../ui/card';
 import { Label } from '@radix-ui/react-label';
+import axios from "axios";
+import Cookie from 'universal-cookie';
 
 const LoginPage: React.FC = () => {
     const [username, setUsername] = useState('');
@@ -16,8 +18,25 @@ const LoginPage: React.FC = () => {
         setPassword(event.target.value);
     };
 
+    const cookie = new Cookie(null, {path: '/'});
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+
+        axios.post('/onii-auth/handle_login', {
+            username,
+            password,
+        }, {withCredentials: true, headers: {
+            'X-CSRFToken': cookie.get('csrftoken'),
+            'Content-Type': 'application/x-www-form-urlencoded',
+        }
+        })
+            .then((response) => {
+                console.log(response.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+
         
     };
 
