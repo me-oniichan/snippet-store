@@ -9,27 +9,60 @@ from .models import Users
 # Create your views here.
 
 def user_exist(user) -> bool:
+    """
+    Check if a user exists in the database.
+
+    Args:
+        user: The user object to check.
+
+    Returns:
+        bool: True if the user exists, False otherwise.
+    """
     if Users.objects.filter(id = user.id).exists():
         return True
     return False
 
 def home(request: HttpRequest):
+    """
+    Render the home page.
+
+    Args:
+        request: The HTTP request object.
+
+    Returns:
+        HttpResponse: The rendered home page.
+    """
     if user_exist(request.user):
         return render(request, template_name="index.html")
     return render(request, template_name="index.html")
 
 
 def signup_page(request: HttpRequest):
-    '''Let User sign up'''
+    """
+    Render the signup page.
+
+    Args:
+        request: The HTTP request object.
+
+    Returns:
+        HttpResponse: The rendered signup page.
+    """
     #redirect if user is already logged in
     if user_exist(request.user):
         return redirect("/")
     return render(request, template_name='signup.html')
 
 
-
 def login_page(request: HttpRequest):
-    '''Let User login'''
+    """
+    Render the login page.
+
+    Args:
+        request: The HTTP request object.
+
+    Returns:
+        HttpResponse: The rendered login page.
+    """
     #redirect if user is already logged in
     if user_exist(request.user):
         return redirect("/")
@@ -37,6 +70,15 @@ def login_page(request: HttpRequest):
 
 
 def add_user(request: HttpRequest):
+    """
+    Add a new user to the database.
+
+    Args:
+        request: The HTTP request object.
+
+    Returns:
+        JsonResponse: The JSON response indicating the success or failure of the user creation.
+    """
     if request.method != "POST":
         HttpResponseBadRequest('Bad Request.')
 
@@ -60,6 +102,15 @@ def add_user(request: HttpRequest):
 
 
 def handle_login(request: HttpRequest):
+    """
+    Handle user login.
+
+    Args:
+        request: The HTTP request object.
+
+    Returns:
+        HttpResponse or JsonResponse: The redirect response if login is successful, or the JSON response indicating login failure.
+    """
     if request.method != "POST": return HttpResponseBadRequest()
     user = authenticate(username = request.POST["username"], password = request.POST["password"])
     print(user)
@@ -73,6 +124,15 @@ def handle_login(request: HttpRequest):
 
 @login_required(redirect_field_name="/")
 def logout_user(request):
+    """
+    Logout the user.
+
+    Args:
+        request: The HTTP request object.
+
+    Returns:
+        HttpResponse: The redirect response after logout.
+    """
     try:
         logout(request)
     except Exception as err:

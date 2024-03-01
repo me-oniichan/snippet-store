@@ -5,7 +5,7 @@ from django.http import HttpRequest, HttpResponseForbidden, HttpResponseNotFound
 from .models import Snippets
 from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
-# Create your views here.
+
 
 def get_snippet(request: HttpRequest, snippet_id : int):
     '''Get a particular snippet using snippet id'''
@@ -42,7 +42,6 @@ def get_user_snippets(request: HttpRequest, author: str):
                 "create_date": str(snippet.create_date),
                 "prefix": snippet.prefix
             })
-        
         
         return JsonResponse(response_data)
     except Users.DoesNotExist:
@@ -132,4 +131,4 @@ def edit_snippet(request: HttpRequest):
     except Snippets.DoesNotExist:
         return HttpResponseNotFound()
     except ValidationError as verr:
-        return HttpResponseBadRequest() 
+        return HttpResponseBadRequest()
