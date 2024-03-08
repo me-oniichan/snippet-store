@@ -35,8 +35,8 @@ def home(request: HttpRequest):
         HttpResponse: The rendered home page.
     """
     if user_exist(request.user):
-        return render(request, template_name="index.html")
-    return render(request, template_name="index.html")
+        return render(request, template_name="dashboard.html")
+    return render(request, template_name="login.html")
 
 def signup(request: HttpRequest):
     if request.method == 'GET':
