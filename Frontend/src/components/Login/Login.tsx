@@ -16,13 +16,15 @@ const override: CSSProperties = {
   borderColor: "red",
 };
 
+
+
 const LoginPage: React.FC = () => {
   useTheme("dark");
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const {toast} = useToast();
+  const { toast } = useToast();
 
   const handleUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUsername(event.target.value);
@@ -54,13 +56,13 @@ const LoginPage: React.FC = () => {
       .then((response) => {
         if (response.status == 302 || response.status == 200) {
           toast({
-              title: "Successfully Logged In",
-              description: "Redirecting to Dashboard",
-              variant: "default"
-            }); 
-            window.location.href = "/";
+            title: "Successfully Logged In",
+            description: "Redirecting to Dashboard",
+            variant: "default"
+          });
+          window.location.href = "/";
         }
-        else{
+        else {
           toast({
             title: "Error",
             description: "Invalid Credentials",
@@ -79,8 +81,8 @@ const LoginPage: React.FC = () => {
         setIsLoading(false);
       });
   };
-  
-  
+
+
 
   return (
     <div>
@@ -91,11 +93,11 @@ const LoginPage: React.FC = () => {
         <CardContent>
           <form onSubmit={handleSubmit}>
             {
-              isLoading? 
-              <div style={{height: 30,display: "flex", placeContent: "center"}}>
-                <PropagateLoader cssOverride={override} color="lime"/>
-              </div>
-               : <></>
+              isLoading ?
+                <div style={{ height: 30, display: "flex", placeContent: "center" }}>
+                  <PropagateLoader cssOverride={override} color="lime" />
+                </div>
+                : <></>
             }
             <div className="grid w-full items-center gap-4 text-lg w-[400px]">
               <div className="flex flex-col space-y-1.5">
@@ -126,14 +128,14 @@ const LoginPage: React.FC = () => {
             </div>
 
             <div className="text-center text-accent-foreground/40 mt-1 hover:text-primary">
-              <a href="/register" className="text-sm">
+              <a href="/onii-auth/signup" className="text-sm">
                 Register yourself
               </a>
             </div>
           </form>
         </CardContent>
       </Card>
-      <Toaster/>
+      <Toaster />
     </div>
   );
 };
