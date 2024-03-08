@@ -1,12 +1,10 @@
 from django.urls import path
-from onii_auth.views import add_user, handle_login, logout_user, login_page, signup_page
+from onii_auth.views import login_user, logout_user, signup
 
 app_name = "onii_auth"
 
 urlpatterns = [
-    path('signup', signup_page, name="signup_page"),
-    path('login', login_page, name="signin_page"),
-    path('add_user', add_user, name="add_user"),
+    path('signup', signup, name="signup"),
+    path('login', login_user, name="login"),
     path('logout', logout_user, name="logout_user"),
-    path('handle_login', handle_login, name="handle_login")
 ]

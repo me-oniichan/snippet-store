@@ -12,7 +12,7 @@ class SnipetOperationAsLogedInUser(TestCase):
         self.display_name = "test_display_name"
         self.key = 0
 
-        self.client.post("/onii-auth/add_user", {
+        self.client.post("/onii-auth/signup", {
             "username" : self.username,
             "password" : self.password,
             "email" : self.email,

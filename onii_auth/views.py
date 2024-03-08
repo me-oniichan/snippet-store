@@ -2,11 +2,13 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ValidationError
 from django.http.request import HttpRequest
-from django.http.response import HttpResponse, HttpResponseBadRequest, HttpResponseNotAllowed, JsonResponse
+from django.http.response import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
 
 from .models import Users
 # Create your views here.
+
+
 
 def user_exist(user) -> bool:
     """
@@ -36,51 +38,13 @@ def home(request: HttpRequest):
         return render(request, template_name="index.html")
     return render(request, template_name="index.html")
 
-
-def signup_page(request: HttpRequest):
-    """
-    Render the signup page.
-
-    Args:
-        request: The HTTP request object.
-
-    Returns:
-        HttpResponse: The rendered signup page.
-    """
-    #redirect if user is already logged in
-    if user_exist(request.user):
-        return redirect("/")
-    return render(request, template_name='signup.html')
-
-
-def login_page(request: HttpRequest):
-    """
-    Render the login page.
-
-    Args:
-        request: The HTTP request object.
-
-    Returns:
-        HttpResponse: The rendered login page.
-    """
-    #redirect if user is already logged in
-    if user_exist(request.user):
-        return redirect("/")
-    return render(request, template_name="login.html")
-
-
-def add_user(request: HttpRequest):
-    """
-    Add a new user to the database.
-
-    Args:
-        request: The HTTP request object.
-
-    Returns:
-        JsonResponse: The JSON response indicating the success or failure of the user creation.
-    """
-    if request.method != "POST":
-        HttpResponseBadRequest('Bad Request.')
+def signup(request: HttpRequest):
+    if request.method == 'GET':
+        '''Let User sign up'''
+        #redirect if user is already logged in
+        if user_exist(request.user):
+            return redirect("/")
+        return render(request, template_name='signup.html')
 
     try:
         user = Users.objects.create_user(
@@ -101,17 +65,14 @@ def add_user(request: HttpRequest):
         }, status=400)
 
 
-def handle_login(request: HttpRequest):
-    """
-    Handle user login.
+def login_user(request: HttpRequest):
+    if request.method == 'GET':
+        '''Let User login'''
+        #redirect if user is already logged in
+        if user_exist(request.user):
+            return redirect("/")
+        return render(request, template_name="login.html")
 
-    Args:
-        request: The HTTP request object.
-
-    Returns:
-        HttpResponse or JsonResponse: The redirect response if login is successful, or the JSON response indicating login failure.
-    """
-    if request.method != "POST": return HttpResponseBadRequest()
     user = authenticate(username = request.POST["username"], password = request.POST["password"])
     print(user)
     if user:

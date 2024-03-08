@@ -5,8 +5,12 @@ import { Card, CardContent, CardHeader } from '../ui/card';
 import { Label } from '@radix-ui/react-label';
 import axios from "axios";
 import Cookie from 'universal-cookie';
+import useTheme from '@/lib/themes';
 
 const LoginPage: React.FC = () => {
+
+    useTheme("dark");
+
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
@@ -22,7 +26,7 @@ const LoginPage: React.FC = () => {
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
-        axios.post('/onii-auth/handle_login', {
+        axios.post('/onii-auth/login', {
             username,
             password,
         }, {withCredentials: true, headers: {
@@ -36,13 +40,11 @@ const LoginPage: React.FC = () => {
             .catch((error) => {
                 console.log(error);
             });
-
-        
     };
 
     return (
         <div>
-            <Card className='hover:border-green-500'>
+            <Card>
                 <CardHeader> <h2 className='font-semibold text-3xl'>Login</h2> </CardHeader>
                 <CardContent>
                     <form onSubmit={handleSubmit}>
@@ -70,7 +72,7 @@ const LoginPage: React.FC = () => {
                                     className='text-lg bg-background p-6'
                                     />
                             </div>
-                            <Button type='submit' variant={"default"} className='text-xl'>
+                            <Button type='submit' variant={"outline"} className='text-xl'>
                                 Login
                             </Button>
                         </div>

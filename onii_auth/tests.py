@@ -43,15 +43,12 @@ class RequestTest(TestCase):
         self.assertEqual(200, self.homepage.status_code)
     
     def test_new_user(self):
-        print("="*40+">")
-        print("Signup User Testing")
-        
         #load signup page
         self.signup_page = self.client.get("/onii-auth/signup", follow=True)
         print(self.signup_page.redirect_chain)
 
         # create new user
-        self.response = self.client.post("/onii-auth/add_user", {
+        self.response = self.client.post("/onii-auth/signup", {
             "username" : self.username,
             "password" : self.password,
             "email" : self.email,
@@ -63,9 +60,7 @@ class RequestTest(TestCase):
         # get signup page after adding user
 
         self.response = self.client.get("/onii-auth/signup", follow=True)
-        print(self.response.redirect_chain, self.response.content)
         
         self.response = self.client.get("/onii-auth/logout")
         self.assertEqual(302, self.response.status_code) #redirected to home page
-        print("="*40+">")
 
