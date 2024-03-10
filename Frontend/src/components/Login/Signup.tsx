@@ -16,7 +16,6 @@ const override: CSSProperties = {
     borderColor: "red",
 };
 
-
 const RegisterPage: React.FC = () => {
     useTheme("dark");
 
@@ -95,6 +94,7 @@ const RegisterPage: React.FC = () => {
                 </CardHeader>
                 <CardContent>
                     <form onSubmit={handleSubmit}>
+                        {/* Show loading spinner if isLoading is true */}
                         {
                             isLoading ?
                                 <div style={{ height: 30, display: "flex", placeContent: "center" }}>
