@@ -8,4 +8,4 @@ def validate_title(title: str):
 
 def validate_prefix(prefix: str):
     if len(prefix) > 10: raise ValidationError(message="prefix can have maximum 10 characters")
-    elif prefix: raise ValidationError(message="Prefix not set")
+    elif not prefix: raise ValidationError(message="Prefix not set")

@@ -1,16 +1,21 @@
 import React, { useEffect, useState } from "react"
+import Snippet from "@/types/Snippet";
 import {
   ResizableHandle,
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable"
+import axios from "axios";
 
 export default function Workspace() {
-  const [snippets, setSnippets] = useState([]);
+  const [snippets, setSnippets] = useState<Snippet[]>([]);
   const [user, setUser] = useState(null);
   useEffect(() => {
-    
-  },[user])
+    axios.get("/dashboard").then((res) => {
+      setSnippets(res.data["snippets"])
+      console.log(res.data["snippets"]);
+    });
+  }, [user])
   return (
     <ResizablePanelGroup
       direction="horizontal"
@@ -18,7 +23,15 @@ export default function Workspace() {
     >
       <ResizablePanel defaultSize={30} minSize={10}>
         <div className="flex h-full justify-center p-6">
-          <span className="font-semibold">One</span>
+          {
+            snippets?.map((snippet, index) => {
+              return (
+                <div key={index} className="flex justify-center items-center p-2">
+                  <span className="font-semibold">{snippet.title}</span>
+                </div>
+              )
+            })
+          }
         </div>
       </ResizablePanel>
       <ResizableHandle />

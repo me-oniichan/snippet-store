@@ -2,6 +2,13 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from .models import Users
 
-admin.site.register(Users, UserAdmin)
+class CustomAdmin(admin.ModelAdmin):
+    list_display = ('username', 'email', 'is_staff', 'is_active', 'is_superuser', 'display_name')
+    search_fields = ('username', 'email')
 
-# Register your models here.
+    filter_horizontal = ()
+    list_filter = ()
+    fieldsets = ()
+
+admin.site.register(Users, CustomAdmin)
+# add firelds to admin panel
