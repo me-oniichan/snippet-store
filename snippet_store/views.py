@@ -8,7 +8,7 @@ from onii_store.models import Snippets
 @login_required
 def dashboard(request: HttpRequest):
     snippets = Snippets.objects.filter(author=request.user).defer('text', 'description', 'forked_from')
-    res = {"snippets": []}
+    res = {"snippets": [], "user" : request.user.username}
     for snippet in snippets:
         res["snippets"].append({
             "title": snippet.title,
