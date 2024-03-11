@@ -16,7 +16,6 @@ export default function Workspace() {
     axios.get("/dashboard").then((res) => {
       setSnippets(res.data["snippets"])
       setUser(res.data["user"])
-      console.log(res.data["snippets"]);
     });
   }, [user])
   return (
@@ -36,6 +35,7 @@ export default function Workspace() {
                 )
               })
             }
+
             <SnippetCard></SnippetCard>
             <SnippetCard></SnippetCard>
             <SnippetCard></SnippetCard>
