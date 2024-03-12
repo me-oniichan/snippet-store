@@ -2,8 +2,12 @@ import React from "react";
 import { Button } from "../ui/button";
 import axios from "axios";
 import Cookies from "universal-cookie";
+import { useAppSelector } from "./Context/hooks";
 const Navbar: React.FC = () => {
     const cookie = new Cookies(null, {path: "/"});
+    const user = useAppSelector((state) => state.userReducer.username);
+    const loading = useAppSelector((state) => state.miscReducer.loading);
+
     const handleLogout = () => {
         axios.post("/onii-auth/logout", {},
         {
@@ -26,7 +30,7 @@ const Navbar: React.FC = () => {
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-4">
                 <span>
-                    username
+                    {loading? "Loading..." : user}
                 </span>
                 <Button variant={"destructive"} size={"sm"} className="m-1" onClick={handleLogout}>Logout</Button>
             </div>
