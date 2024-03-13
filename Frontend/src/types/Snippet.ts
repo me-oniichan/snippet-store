@@ -1,5 +1,5 @@
 type Snippet = {
-    id: string;
+    pk: number;
     title: string;
     code?: string;
     language: string;

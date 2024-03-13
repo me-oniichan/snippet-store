@@ -12,6 +12,8 @@ const initialState= {
     snippets: [],
 } as initType;
 
+
+
 // Create the slice
 const snippetSlice = createSlice({
     name: 'snippet-slice',
@@ -28,8 +30,10 @@ const snippetSlice = createSlice({
             state.selectedSnippet = state.snippets.length - 1;
         },
         updateSnippet(state, action: PayloadAction<Snippet>) {
-            const index = state.snippets.findIndex((snippet) => snippet.id === action.payload.id);
+            const index = state.snippets.findIndex((snippet) => snippet.pk === action.payload.pk);
             state.snippets[index] = action.payload;
+            console.log(index);
+            
         },
         deleteSnippet(state, action: PayloadAction<number>) {
             state.snippets = state.snippets.filter((snippet, idx) => idx !== action.payload);

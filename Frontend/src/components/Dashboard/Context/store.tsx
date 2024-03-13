@@ -2,12 +2,14 @@ import { configureStore } from '@reduxjs/toolkit';
 import userReducer from './userReducer';
 import snippetReducer from './snippetReducer';
 import miscReducer from './miscReducer';
+import editReducer from './editReducer';
 
 const store = configureStore({
     reducer: {
         userReducer,
         snippetReducer,
-        miscReducer
+        miscReducer,
+        editReducer        
     },
 });
 

@@ -12,7 +12,7 @@ def dashboard(request: HttpRequest):
     for snippet in snippets:
         res["snippets"].append({
             "title": snippet.title,
-            "id": snippet.pk,
+            "pk": snippet.pk,
             "created_date": snippet.create_date,
             "prefix": snippet.prefix,
             "language": snippet.language

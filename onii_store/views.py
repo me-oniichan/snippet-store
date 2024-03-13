@@ -20,6 +20,7 @@ def get_snippet(request: HttpRequest, snippet_id : int):
                 "title": snippet.title,
                 "description": snippet.description,
                 "create_date": str(snippet.create_date),
+                "pk": snippet.pk,
                 "owned": request.user == snippet.author
             }
         })
@@ -55,13 +56,17 @@ def save_snippet(request: HttpRequest):
         snippet = Snippets.objects.create(
             title=request.POST["title"],
             code=request.POST["code"],
-            desc=request.POST["desc"],
+            desc=request.POST["description"],
             author=request.user,
             language=request.POST["language"],
             prefix=request.POST["prefix"]
         )
         return JsonResponse({
-            "snippet_id": snippet.pk
+            "title": snippet.title,
+            "id": snippet.pk,
+            "created_date": snippet.create_date,
+            "prefix": snippet.prefix,
+            "language": snippet.language
         })
     except ValidationError as err:
         return JsonResponse({"message":err.message}, status = 400)

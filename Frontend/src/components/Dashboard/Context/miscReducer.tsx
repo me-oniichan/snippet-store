@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 
 const initialState= {
-    mode: 'read' as 'read' | 'edit' | 'add',
+    mode: null as 'read' | 'edit' | 'add' | null,
     loading: false,
     
 };
