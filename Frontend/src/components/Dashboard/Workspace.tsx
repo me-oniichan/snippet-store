@@ -11,6 +11,7 @@ import { useAppDispatch, useAppSelector } from "./Context/hooks";
 import { actions as snippetAction } from "./Context/snippetReducer";
 import { actions as userAction } from "./Context/userReducer";
 import { actions as miscAction } from "./Context/miscReducer";
+import { actions as editAction } from "./Context/editReducer";
 import GridLoader from "react-spinners/GridLoader";
 import EditorArea from "./EditorArea";
 import { Button } from "../ui/button";
@@ -66,7 +67,11 @@ export default function Workspace() {
             <div className="flex justify-between p-2 bg-popover">
               <span className="font-semibold">Snippets</span>
               <Button
-                onClick={() => dispatch(miscAction.setMode("add"))}
+                onClick={() => {
+                  dispatch(snippetAction.setSelectedSnippet(-1));
+                  dispatch(editAction.resetSnippet());
+                  dispatch(miscAction.setMode("add"))
+                }}
                 size={"sm"}
               >
                 Add
@@ -98,7 +103,7 @@ export default function Workspace() {
             <div className="h-full items-center justify-center p-3">
               <Textarea
                 placeholder="description"
-                value={mode === "read"? snippets[selected].description : editDesc}
+                value={mode === "read" && selected!==-1? snippets[selected].description : editDesc}
                 onChange={(e) => setDesc(e.target.value)}
                 className="h-full bg-popover mt-2"
                 readOnly={mode === null || mode === "read"}

@@ -15,8 +15,9 @@ import axios from "axios";
 import Cookie from "universal-cookie";
 import { useAppDispatch } from "./Context/hooks";
 import { actions as snippetAction } from "./Context/snippetReducer";
-import { actions as miscAction } from "./Context/miscReducer";
 import { actions as editAction } from "./Context/editReducer";
+import { Label } from "../ui/label";
+import { actions as miscAction } from "./Context/miscReducer";
 
 interface editorProp {
   children: string;
@@ -39,13 +40,14 @@ export default forwardRef((props: editorProp, ref: any) => {
   const editorRef = useRef<any>(null);
   const monaco = useMonaco();
 
-
   // Edit Reducer vars
   const editCode = useAppSelector((state) => state.editReducer.code);
   const editTitle = useAppSelector((state) => state.editReducer.title);
   const editPrefix = useAppSelector((state) => state.editReducer.prefix);
-  const editLang = useAppSelector((state)=> state.editReducer.language);
+  const editLang = useAppSelector((state) => state.editReducer.language);
 
+  // cookie
+  const cookie = new Cookie();
 
   //functions
   const mount = (editor: any, monaco: any) => {
@@ -55,9 +57,6 @@ export default forwardRef((props: editorProp, ref: any) => {
 
   const changeLang = (element: any) => {
     dispatch(editAction.updateLanguage(element));
-    if (monaco) {
-      monaco.editor.setModelLanguage(editorRef.current.getModel(), element);
-    }
   };
 
   // send data to backend
@@ -89,17 +88,30 @@ export default forwardRef((props: editorProp, ref: any) => {
     }
     */
   }
+
+  function changeEdit() {
+    if (selected == -1) {
+      dispatch(editAction.resetSnippet());
+    } else {
+      dispatch(editAction.loadSnippet(snippets[selected]));
+      dispatch(miscAction.setMode("edit"));
+    }
+  }
+
   function deleteSnippet() {
     if (selected !== -1) {
       axios
-        .delete("/onii-store/delete", {
-          data: { snippet_id: snippets[selected].pk },
-          withCredentials: true,
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-            "X-CSRFToken": new Cookie().get("csrftoken"),
-          },
-        })
+        .post(
+          "/onii-store/delete",
+          { snippet_id: snippets[selected].pk },
+          {
+            withCredentials: true,
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded",
+              "X-CSRFToken": cookie.get("csrftoken"),
+            },
+          }
+        )
         .then((res) => {
           if (res.status === 200) {
             dispatch(snippetAction.deleteSnippet(selected));
@@ -111,8 +123,11 @@ export default forwardRef((props: editorProp, ref: any) => {
   if (selected == -1 && mode !== "add") return <>Nothing to see here</>;
   return (
     <div className="h-full w-full">
-      <div className="h-[40px] m-1 flex justify-between gap-3">
-        <Select onValueChange={changeLang} defaultValue={mode==="read"? snippets[selected].language:editLang}>
+      <div className="h-[40px] m-1 flex justify-between gap-6">
+        <Select
+          onValueChange={changeLang}
+          value={mode === "read" ? snippets[selected].language : editLang}
+        >
           <SelectTrigger className="bg-popover w-40">
             <SelectValue></SelectValue>
           </SelectTrigger>
@@ -171,30 +186,30 @@ export default forwardRef((props: editorProp, ref: any) => {
           </SelectContent>
         </Select>
 
-        <Input
-          className="w-1/5"
-          placeholder="Prefix"
-          readOnly={mode === "read"}
-          value={mode==="read"? snippets[selected].prefix : editPrefix}
-          onChange={(e) => dispatch(editAction.updatePrefix(e.target.value))}
-        ></Input>
-        <Input
-          placeholder="Title"
-          readOnly={mode === "read"}
-          value={mode=="read"? snippets[selected].title : editTitle}
-          onChange={(e) => dispatch(editAction.updateTitle(e.target.value))}
-        ></Input>
+        <Label className="flex justify-center items-center gap-2">
+          Prefix
+          <Input
+            className=""
+            placeholder="Prefix"
+            readOnly={mode === "read"}
+            value={mode === "read" ? snippets[selected]?.prefix : editPrefix}
+            onChange={(e) => dispatch(editAction.updatePrefix(e.target.value))}
+          ></Input>
+        </Label>
+
+        <Label className="flex items-center gap-2 w-full">
+          Title
+          <Input
+            placeholder="Title"
+            readOnly={mode === "read"}
+            value={mode == "read" ? snippets[selected].title : editTitle}
+            onChange={(e) => dispatch(editAction.updateTitle(e.target.value))}
+          ></Input>
+        </Label>
 
         <div className="flex gap-2">
           {mode == "read" ? (
-            <Button
-              size={"sm"}
-              onClick={() => {
-                if (editorRef.current && mode !== "read") {
-                  editorRef.current.getModel().setValue("");
-                }
-              }}
-            >
+            <Button size={"sm"} onClick={changeEdit}>
               Edit
             </Button>
           ) : (
@@ -208,24 +223,30 @@ export default forwardRef((props: editorProp, ref: any) => {
             <></>
           )}
           {mode === "add" ? (
-            <>
-              <Button size={"sm"} onClick={saveSnippet}>
-                Save
-              </Button>
-              <Button size={"sm"} variant={"secondary"}>
-                Cancel
-              </Button>
-            </>
+            <Button size={"sm"} onClick={saveSnippet}>
+              Save
+            </Button>
           ) : (
             <></>
           )}
           {mode === "edit" ? <Button size={"sm"}>Save</Button> : <></>}
+          {mode === "edit" || mode === "add" ? (
+            <Button
+              size={"sm"}
+              variant={"secondary"}
+              onClick={() => dispatch(miscAction.setMode("read"))}
+            >
+              Cancel
+            </Button>
+          ) : (
+            <></>
+          )}
         </div>
       </div>
 
       <Editor
         theme="vs-dark"
-        language={mode==="read"? snippets[selected].language:editLang}
+        language={mode === "read" ? snippets[selected].language : editLang}
         onMount={mount}
         options={{
           readOnly: mode === "read",
@@ -244,7 +265,7 @@ export default forwardRef((props: editorProp, ref: any) => {
         }}
         height={"calc(100% - 40px)"}
         value={mode === "read" ? snippets[selected].code : editCode}
-        onChange={code=> dispatch(editAction.updateCode(code))}
+        onChange={(code) => dispatch(editAction.updateCode(code))}
       />
     </div>
   );
