@@ -104,7 +104,7 @@ export default function Workspace() {
               <Textarea
                 placeholder="description"
                 value={mode === "read" && selected!==-1? snippets[selected].description : editDesc}
-                onChange={(e) => setDesc(e.target.value)}
+                onChange={(e) => dispatch(editAction.updateDesc(e.target.value))}
                 className="h-full bg-popover mt-2"
                 readOnly={mode === null || mode === "read"}
               ></Textarea>

@@ -16,6 +16,7 @@ const editSlice = createSlice({
     initialState,
     reducers: {
         loadSnippet(state, action: PayloadAction<Snippet>) {
+            state.pk = action.payload.pk
             state.title = action.payload.title
             state.language = action.payload.language
             state.prefix = action.payload.prefix
@@ -43,6 +44,7 @@ const editSlice = createSlice({
             state.prefix = ""
             state.code = ""
             state.description = ""
+            state.pk=-1
         }
     }
 })

@@ -18,6 +18,7 @@ import { actions as snippetAction } from "./Context/snippetReducer";
 import { actions as editAction } from "./Context/editReducer";
 import { Label } from "../ui/label";
 import { actions as miscAction } from "./Context/miscReducer";
+import { useUtils } from "./utils/useUtils";
 
 interface editorProp {
   children: string;
@@ -60,34 +61,7 @@ export default forwardRef((props: editorProp, ref: any) => {
   };
 
   // send data to backend
-  function saveSnippet() {
-    /*
-    if (editorRef.current) {
-      const data = {
-        title,
-        language,
-        description: props.description,
-        code: editorRef.current.getModel().getValue(),
-        prefix,
-      };
-
-      axios
-        .post("/onii-store/save", data, {
-          withCredentials: true,
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-            "X-CSRFToken": new Cookie().get("csrftoken"),
-          },
-        })
-        .then((res) => {
-          if (res.status === 200) {
-            dispatch(miscAction.setMode("read"));
-            dispatch(snippetAction.addSnippet(res.data));
-          }
-        });
-    }
-    */
-  }
+  const {addSnippet, editSnippet} = useUtils();
 
   function changeEdit() {
     if (selected == -1) {
@@ -223,13 +197,13 @@ export default forwardRef((props: editorProp, ref: any) => {
             <></>
           )}
           {mode === "add" ? (
-            <Button size={"sm"} onClick={saveSnippet}>
+            <Button size={"sm"} onClick={addSnippet}>
               Save
             </Button>
           ) : (
             <></>
           )}
-          {mode === "edit" ? <Button size={"sm"}>Save</Button> : <></>}
+          {mode === "edit" ? <Button size={"sm"} onClick={editSnippet}>Save</Button> : <></>}
           {mode === "edit" || mode === "add" ? (
             <Button
               size={"sm"}

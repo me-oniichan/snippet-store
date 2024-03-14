@@ -36,6 +36,7 @@ def get_user_snippets(request: HttpRequest, author: str):
         
         for snippet in snippets:
             response_data["snippets"].append({
+                "pk": snippet.pk,
                 "language": snippet.language,
                 "code": snippet.text,
                 "title": snippet.title,
@@ -63,13 +64,13 @@ def save_snippet(request: HttpRequest):
         )
         return JsonResponse({
             "title": snippet.title,
-            "id": snippet.pk,
+            "pk": snippet.pk,
             "created_date": snippet.create_date,
             "prefix": snippet.prefix,
             "language": snippet.language
         })
     except ValidationError as err:
-        return JsonResponse({"message":err.message}, status = 400)
+        return JsonResponse({"message":err.messages}, status = 400)
 
 @require_POST
 @login_required
@@ -116,8 +117,9 @@ def fork(request: HttpRequest):
 @login_required
 def edit_snippet(request: HttpRequest):
     '''Edit a snippet in db'''
+    print(request.POST)
     try:
-        snippet = Snippets.objects.get(pk = request.POST["snippet_id"])
+        snippet = Snippets.objects.get(pk = request.POST["pk"])
         if request.user != snippet.author:
             return HttpResponseForbidden()
 
