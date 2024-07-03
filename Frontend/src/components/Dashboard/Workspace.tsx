@@ -5,7 +5,7 @@ import {
 } from "@/components/ui/resizable";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import GridLoader from "react-spinners/GridLoader";
 import { Button } from "../ui/button";
 import { Textarea } from "../ui/textarea";

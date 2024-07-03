@@ -46,7 +46,7 @@ export default () => {
   const cookie = new Cookie();
 
   //functions
-  const mount = (editor: any, monaco: any) => {
+  const mount = (editor: any) => {
     editorRef.current = editor;
   };
 
