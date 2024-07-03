@@ -1,6 +1,7 @@
 import useTheme from '@/lib/themes';
 import React from 'react';
 import { Provider } from 'react-redux';
+import { Toaster } from '../ui/toaster';
 import store from './Context/store';
 import Navbar from './Navbar';
 import Workspace from './Workspace';
@@ -17,6 +18,7 @@ const HelloWorld: React.FC = () => {
                     <Workspace/> 
                 </div>
             </div>
+            <Toaster/>
         </Provider>
     );
 };

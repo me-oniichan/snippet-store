@@ -2,12 +2,14 @@ import axios from "axios";
 import { useAppDispatch, useAppSelector } from "../Context/hooks";
 import { actions as snippetAction } from "../Context/snippetReducer";
 import { actions as miscAction } from "../Context/miscReducer";
+import { useToast } from "@/components/ui/use-toast";
 import Cookie from "universal-cookie";
 import Snippet from "@/types/Snippet";
 
 export function useUtils() {
   const dispatch = useAppDispatch();
   const token = new Cookie().get("csrftoken");
+  const {toast} = useToast();
   const data: Snippet = {
     pk: useAppSelector((state) => state.editReducer.pk),
     title: useAppSelector((state) => state.editReducer.title),
@@ -31,6 +33,18 @@ export function useUtils() {
         if (res.status === 200) {
           dispatch(miscAction.setMode("read"));
           dispatch(snippetAction.addSnippet(res.data));
+          toast({
+            title: "Snippet Added",
+            description: "Your snippet has been added successfully",
+            variant: "success",
+          });
+        }
+        else {
+          toast({
+            title: "Failed",
+            description: "There was an error while adding the snippet",
+            variant: "destructive",
+          });
         }
       });
   };

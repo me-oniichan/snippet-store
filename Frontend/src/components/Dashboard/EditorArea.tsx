@@ -18,6 +18,7 @@ import { useAppDispatch, useAppSelector } from "./Context/hooks";
 import { actions as miscAction } from "./Context/miscReducer";
 import { actions as snippetAction } from "./Context/snippetReducer";
 import { useUtils } from "./utils/useUtils";
+import { useToast } from "../ui/use-toast";
 
 
 export default () => {
@@ -27,6 +28,7 @@ export default () => {
   );
   const mode = useAppSelector((state) => state.miscReducer.mode);
   const snippets = useAppSelector((state) => state.snippetReducer.snippets);
+  const {toast} = useToast();
 
   // dispatcher
   const dispatch = useAppDispatch();
@@ -81,6 +83,18 @@ export default () => {
         .then((res) => {
           if (res.status === 200) {
             dispatch(snippetAction.deleteSnippet(selected));
+            toast({
+              title: "Snippet Deleted",
+              description: "Your snippet has been deleted successfully",
+              variant: "success",
+            });
+          }
+          else{
+            toast({
+              title: "Failed",
+              description: "There was an error while deleting the snippet",
+              variant: "destructive",
+            });
           }
         });
     }
