@@ -218,7 +218,7 @@ export default () => {
           readOnly: mode === "read",
           domReadOnly: true,
           fontFamily: "Fira Code",
-          fontSize: 16,
+          fontSize: 14,
           showUnused: false,
           showDeprecated: false,
           minimap: {

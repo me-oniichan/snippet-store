@@ -50,8 +50,9 @@ export default function Workspace() {
 
   return (
     <ResizablePanelGroup
+      style={{ height: "calc(100vh - 4rem)" }}
       direction="horizontal"
-      className="max-w-8xl rounded-lg border bg-card"
+      className="max-w-8xl rounded-lg border"
     >
       <ResizablePanel
         defaultSize={30}

@@ -11,7 +11,7 @@ const HelloWorld: React.FC = () => {
 
     return (
         <Provider store={store}>
-            <div className='h-full box-border'>
+            <div className='box-border'>
                 <Navbar/>
                 <div className='p-3 h-full'>
                     <Workspace/> 
