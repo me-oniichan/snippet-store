@@ -21,6 +21,7 @@
     "@radix-ui/react-toast": "^1.1.5",
     "@reduxjs/toolkit": "^2.2.1",
     "axios": "^1.6.7",
+    "braces": "^3.0.3",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "lucide-react": "^0.323.0",
