@@ -4,7 +4,7 @@ from django.core.exceptions import ValidationError
 from django.http.request import HttpRequest
 from django.http.response import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
-
+from django.views.decorators.csrf import ensure_csrf_cookie
 from .models import Users
 # Create your views here.
 
@@ -24,6 +24,7 @@ def user_exist(user) -> bool:
         return True
     return False
 
+@ensure_csrf_cookie
 def home(request: HttpRequest):
     """
     Render the home page.

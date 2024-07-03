@@ -1,10 +1,10 @@
-import React from 'react';
-import Navbar from './Navbar';
 import useTheme from '@/lib/themes';
-import Workspace from './Workspace';
-import './styles.css'
-import store from './Context/store';
+import React from 'react';
 import { Provider } from 'react-redux';
+import store from './Context/store';
+import Navbar from './Navbar';
+import Workspace from './Workspace';
+import './styles.css';
 
 const HelloWorld: React.FC = () => {
     useTheme("dark");

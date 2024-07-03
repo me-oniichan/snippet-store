@@ -1,26 +1,28 @@
-import { useEffect, useState } from "react";
 import {
   ResizableHandle,
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
-import axios from "axios";
-import SnippetCard from "./SnippetCard";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { useAppDispatch, useAppSelector } from "./Context/hooks";
-import { actions as snippetAction } from "./Context/snippetReducer";
-import { actions as userAction } from "./Context/userReducer";
-import { actions as miscAction } from "./Context/miscReducer";
-import { actions as editAction } from "./Context/editReducer";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import GridLoader from "react-spinners/GridLoader";
-import EditorArea from "./EditorArea";
 import { Button } from "../ui/button";
 import { Textarea } from "../ui/textarea";
+import { actions as editAction } from "./Context/editReducer";
+import { useAppDispatch, useAppSelector } from "./Context/hooks";
+import { actions as miscAction } from "./Context/miscReducer";
+import { actions as snippetAction } from "./Context/snippetReducer";
+import { actions as userAction } from "./Context/userReducer";
+import EditorArea from "./EditorArea";
+import SnippetCard from "./SnippetCard";
 
 export default function Workspace() {
   // Store's Data
   const snippets = useAppSelector((state) => state.snippetReducer.snippets);
-  const selected = useAppSelector(state => state.snippetReducer.selectedSnippet);
+  const selected = useAppSelector(
+    (state) => state.snippetReducer.selectedSnippet
+  );
   const user = useAppSelector((state) => state.userReducer.username);
   const loading = useAppSelector((state) => state.miscReducer.loading);
   const editDesc = useAppSelector((state) => state.editReducer.description);
@@ -30,7 +32,6 @@ export default function Workspace() {
   // Store Dispatcher
   const dispatch = useAppDispatch();
 
-  const [desc, setDesc] = useState<string>("");
 
   const loadDahsboard = async () => {
     dispatch(miscAction.setLoading(true));
@@ -70,7 +71,7 @@ export default function Workspace() {
                 onClick={() => {
                   dispatch(snippetAction.setSelectedSnippet(-1));
                   dispatch(editAction.resetSnippet());
-                  dispatch(miscAction.setMode("add"))
+                  dispatch(miscAction.setMode("add"));
                 }}
                 size={"sm"}
               >
@@ -93,8 +94,7 @@ export default function Workspace() {
           <ResizablePanel defaultSize={60}>
             <div className="flex h-full items-center justify-center p-0">
               <GridLoader loading={loading} color="rgb(34, 197, 94)" />
-              <EditorArea language="plaintext" description={desc}>
-                {" "}
+              <EditorArea>
               </EditorArea>
             </div>
           </ResizablePanel>
@@ -103,8 +103,14 @@ export default function Workspace() {
             <div className="h-full items-center justify-center p-3">
               <Textarea
                 placeholder="description"
-                value={mode === "read" && selected!==-1? snippets[selected].description : editDesc}
-                onChange={(e) => dispatch(editAction.updateDesc(e.target.value))}
+                value={
+                  mode === "read" && selected !== -1
+                    ? snippets[selected].description
+                    : editDesc
+                }
+                onChange={(e) =>
+                  dispatch(editAction.updateDesc(e.target.value))
+                }
                 className="h-full bg-popover mt-2"
                 readOnly={mode === null || mode === "read"}
               ></Textarea>

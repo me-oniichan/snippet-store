@@ -5,11 +5,11 @@ import {
   CardFooter,
 } from "@/components/ui/card"
 import Snippet from "@/types/Snippet"
-import { useAppDispatch, useAppSelector } from "./Context/hooks"
-import {actions as snippetAction} from "./Context/snippetReducer"
-import {actions as editAction} from "./Context/editReducer"
-import {actions as miscAction} from "./Context/miscReducer"
 import axios from "axios"
+import { actions as editAction } from "./Context/editReducer"
+import { useAppDispatch, useAppSelector } from "./Context/hooks"
+import { actions as miscAction } from "./Context/miscReducer"
+import { actions as snippetAction } from "./Context/snippetReducer"
 
 export default function (props: {idx: number}&Snippet) {
   const selected = useAppSelector(state=>state.snippetReducer.selectedSnippet) === props.idx;

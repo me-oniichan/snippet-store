@@ -1,5 +1,4 @@
-import { Editor, useMonaco } from "@monaco-editor/react";
-import { useEffect, useRef, useState, forwardRef } from "react";
+import { Button } from "@/components/ui/button";
 import {
   Select,
   SelectContent,
@@ -8,25 +7,20 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Button } from "@/components/ui/button";
-import { useAppSelector } from "./Context/hooks";
-import { Input } from "../ui/input";
+import { Editor } from "@monaco-editor/react";
 import axios from "axios";
+import {  useRef } from "react";
 import Cookie from "universal-cookie";
-import { useAppDispatch } from "./Context/hooks";
-import { actions as snippetAction } from "./Context/snippetReducer";
-import { actions as editAction } from "./Context/editReducer";
+import { Input } from "../ui/input";
 import { Label } from "../ui/label";
+import { actions as editAction } from "./Context/editReducer";
+import { useAppDispatch, useAppSelector } from "./Context/hooks";
 import { actions as miscAction } from "./Context/miscReducer";
+import { actions as snippetAction } from "./Context/snippetReducer";
 import { useUtils } from "./utils/useUtils";
 
-interface editorProp {
-  children: string;
-  language: string;
-  description?: string;
-}
 
-export default forwardRef((props: editorProp, ref: any) => {
+export default () => {
   // Store's Data
   const selected = useAppSelector(
     (state) => state.snippetReducer.selectedSnippet
@@ -39,7 +33,6 @@ export default forwardRef((props: editorProp, ref: any) => {
 
   //monaco variables
   const editorRef = useRef<any>(null);
-  const monaco = useMonaco();
 
   // Edit Reducer vars
   const editCode = useAppSelector((state) => state.editReducer.code);
@@ -52,7 +45,6 @@ export default forwardRef((props: editorProp, ref: any) => {
 
   //functions
   const mount = (editor: any, monaco: any) => {
-    if (ref) ref.current = editor;
     editorRef.current = editor;
   };
 
@@ -243,4 +235,4 @@ export default forwardRef((props: editorProp, ref: any) => {
       />
     </div>
   );
-});
+};
