@@ -36,10 +36,10 @@ export default function (props: {idx: number}&Snippet) {
 
   return (
     <div>
-      <Card className={"group shadow-none mt-1 mb-1 rounded-md border-none "+ (selected?"bg-secondary": "hover:bg-accent")}
+      <Card className={"group shadow-none rounded-none bg-card "+ (selected?"bg-secondary border-none hover:border-foreground": "border-none hover:bg-secondary")}
         onClick={updateView}
       >
-        <CardContent className="p-2 pt-2 pb-2 group-hover:text-primary">
+        <CardContent className="p-2 pt-2 pb-1 group-hover:text-primary">
           {props.title}
         </CardContent>
         <CardFooter className="p-2 pt-0 gap-3">

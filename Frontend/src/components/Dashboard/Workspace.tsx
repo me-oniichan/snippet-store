@@ -50,9 +50,9 @@ export default function Workspace() {
 
   return (
     <ResizablePanelGroup
-      style={{ height: "calc(100vh - 4rem)" }}
+      style={{ height: "calc(100vh - 3em)" }}
       direction="horizontal"
-      className="max-w-8xl rounded-lg border"
+      className="max-w-8xl rounded-lg border mt-1"
     >
       <ResizablePanel
         defaultSize={30}
@@ -66,7 +66,7 @@ export default function Workspace() {
           </div>
         ) : (
           <ScrollArea className="h-full p-0 m-0">
-            <div className="flex justify-between p-2 bg-popover">
+            <div className="flex justify-between p-2 bg-secondary border-b-2 border-foreground/40">
               <span className="font-semibold">Snippets</span>
               <Button
                 onClick={() => {
@@ -74,12 +74,12 @@ export default function Workspace() {
                   dispatch(editAction.resetSnippet());
                   dispatch(miscAction.setMode("add"));
                 }}
-                size={"sm"}
+                size={"esm"}
               >
                 Add
               </Button>
             </div>
-            <div className="divide-y divide-accent-foreground/40 p-3">
+            <div className="divide-y divide-accent-foreground/40">
               {snippets.map((snippet, idx) => {
                 return (
                   <SnippetCard key={idx} {...snippet} idx={idx}></SnippetCard>
@@ -101,7 +101,7 @@ export default function Workspace() {
           </ResizablePanel>
           <ResizableHandle />
           <ResizablePanel defaultSize={40} minSize={20}>
-            <div className="h-full items-center justify-center p-3">
+            <div className="h-full items-center justify-center p-1">
               <Textarea
                 placeholder="description"
                 value={
@@ -112,7 +112,7 @@ export default function Workspace() {
                 onChange={(e) =>
                   dispatch(editAction.updateDesc(e.target.value))
                 }
-                className="h-full bg-popover mt-2"
+                className="h-full bg-popover"
                 readOnly={mode === null || mode === "read"}
               ></Textarea>
             </div>

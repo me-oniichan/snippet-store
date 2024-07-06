@@ -32,7 +32,7 @@ const Navbar: React.FC = () => {
                 <span>
                     {loading? "Loading..." : user}
                 </span>
-                <Button variant={"destructive"} size={"sm"} className="m-1" onClick={handleLogout}>Logout</Button>
+                <Button variant={"destructive"} size={"esm"} className="m-1 p-3" onClick={handleLogout}>Logout</Button>
             </div>
           </div>
         </div>
