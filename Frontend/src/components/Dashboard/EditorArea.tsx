@@ -103,7 +103,7 @@ export default () => {
   if (selected == -1 && mode !== "add") return <>Nothing to see here</>;
   return (
     <div className="h-full w-full">
-      <div className="h-[40px] m-1 flex justify-between gap-6">
+      <div className="h-[40px] m-1 flex justify-between gap-6 mr-8">
         <Select
           onValueChange={changeLang}
           value={mode === "read" ? snippets[selected].language : editLang}
@@ -169,7 +169,7 @@ export default () => {
         <Label className="flex justify-center items-center gap-2">
           Prefix
           <Input
-            className=""
+            className={mode==="read"?"border-none outline-none":""}
             placeholder="Prefix"
             readOnly={mode === "read"}
             value={mode === "read" ? snippets[selected]?.prefix : editPrefix}
@@ -207,7 +207,7 @@ export default () => {
               Save
             </Button>
           ) : (
-            <></>
+            <></> 
           )}
           {mode === "edit" ? <Button size={"sm"} onClick={editSnippet}>Save</Button> : <></>}
           {mode === "edit" || mode === "add" ? (
